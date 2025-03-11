@@ -399,11 +399,13 @@
             
             switch (event.key) {
                 case 'ArrowLeft':
+                case 'ArrowUp':
                     goToPrevSlide();
                     event.preventDefault();
                     break;
                     
                 case 'ArrowRight':
+                case 'ArrowDown':
                     goToNextSlide();
                     event.preventDefault();
                     break;
