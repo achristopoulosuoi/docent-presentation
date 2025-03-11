@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Chemistry Education</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: white;
+            color: #333;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        h1 {
+            color: #4B3BC2;
+            font-size: 44px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #4B3BC2;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+        .content-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .left-content {
+            flex: 1; /* Restored to original value */
+            min-width: 300px;
+            max-width: 100%;
+            padding-right: 20px;
+        }
+        .right-content {
+            flex: 1.2; /* Restored to original value */
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .section-title {
+            color: #4B3BC2;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        .description ul {
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .description li {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #4B3BC2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .feature-text {
+            flex: 1;
+            line-height: 1.4;
+            font-size: 17px;
+        }
+        .key-advantage {
+            background-color: rgba(75, 59, 194, 0.1);
+            border-left: 4px solid #4B3BC2;
+            padding: 15px;
+            margin-top: 25px;
+        }
+        .key-advantage-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        .key-advantage ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .key-advantage li {
+            margin-bottom: 5px;
+            font-size: 17px;
+        }
+        .visualization {
+            background-color: #444;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 360px; /* Changed from 330px to match slide7's 360px */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            width: 75%; /* Changed from 68% to match slide7's 75% */
+            margin-left: auto;
+            margin-right: 5%; /* Changed from 15% to match slide7's 5% */
+        }
+        .viz-header {
+            background-color: rgba(0,0,0,0.4);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+        }
+        .viz-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .viz-dropdown {
+            position: relative;
+            z-index: 5;
+        }
+        .dropdown-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: rgba(0,0,0,0.8);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 5;
+            border-radius: 4px;
+        }
+        /* Removed hover behavior to allow JavaScript control */
+        .dropdown-item {
+            color: white;
+            padding: 10px 14px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Education Level Indicator Styles */
+        .education-level {
+            margin: 0 0 25px 0;
+            padding: 12px;
+            background-color: rgba(75, 59, 194, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .level-icon-container {
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .school-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #4B3BC2;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(75, 59, 194, 0.3);
+        }
+        
+        .level-details {
+            flex: 1;
+        }
+        
+        .level-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .level-description {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        
+        .level-bar {
+            display: flex;
+            margin-top: 10px;
+            background-color: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .level-segment {
+            height: 100%;
+            flex: 1;
+            margin-right: 2px;
+        }
+        
+        .level-segment:last-child {
+            margin-right: 0;
+        }
+        
+        .level-active {
+            background-color: #4B3BC2;
+        }
+        
+        .level-inactive {
+            background-color: rgba(75, 59, 194, 0.2);
+        }
+        
+        /* Learning Outcomes Styles */
+        .learning-outcomes {
+            margin-bottom: 25px;
+        }
+        
+        .outcomes-title {
+            color: #4B3BC2;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            max-width: 100%;
+        }
+        
+        .outcome-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            white-space: nowrap;
+        }
+        
+        .outcome-icon {
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+        
+        .outcome-text {
+            font-size: 16px;
+            color: #444;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+        }
+        
+        /* VR-Enhanced Learning Cards - NEW */
+        .vr-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .benefit-card {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(75, 59, 194, 0.05);
+            border-left: 4px solid #4B3BC2;
+            border-radius: 0 8px 8px 0;
+            padding: 8px 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(75, 59, 194, 0.15);
+        }
+        
+        .benefit-icon {
+            flex-shrink: 0;
+            margin-right: 12px;
+            transform: translateY(2px);
+        }
+        
+        .benefit-text {
+            font-size: 16px;
+            line-height: 1.3;
+            color: #333;
+            text-align: justify;
+        }
+        
+        /* Data Badge for Current View */
+        .data-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            z-index: 3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* Enhanced Atom Animations */
+        .atom {
+            position: absolute;
+            border-radius: 50%;
+            transform-origin: center;
+            box-shadow: 0 0 15px rgba(255,255,255,0.6);
+            transition: all 0.5s ease;
+        }
+        
+        .carbon {
+            background: radial-gradient(circle at 30% 30%, #a0a0a0, #505050);
+            width: 45px;
+            height: 45px;
+            z-index: 10; /* Increased to ensure carbon is always on top */
+            animation: pulse-carbon 4s infinite alternate;
+        }
+        
+        .hydrogen {
+            background: radial-gradient(circle at 30% 30%, #ffffff, #e0e0e0);
+            width: 28px;
+            height: 28px;
+            z-index: 9; /* Ensure hydrogen appears above bonds but below carbon */
+            animation: hydrogen-glow 3s infinite alternate;
+        }
+        
+        .oxygen {
+            background: radial-gradient(circle at 30% 30%, #ff5555, #dd0000);
+            width: 40px;
+            height: 40px;
+            z-index: 2;
+            animation: pulse-oxygen 4s infinite alternate;
+        }
+        
+        @keyframes pulse-carbon {
+            0% { box-shadow: 0 0 8px rgba(128,128,128,0.7); transform: scale(0.95) translate(-50%, -50%); }
+            100% { box-shadow: 0 0 25px rgba(128,128,128,0.9); transform: scale(1.05) translate(-50%, -50%); }
+        }
+        
+        @keyframes hydrogen-glow {
+            0% { box-shadow: 0 0 5px rgba(255,255,255,0.7); }
+            100% { box-shadow: 0 0 18px rgba(255,255,255,0.9); }
+        }
+        
+        @keyframes pulse-oxygen {
+            0% { box-shadow: 0 0 8px rgba(255,0,0,0.7); transform: scale(0.95); }
+            100% { box-shadow: 0 0 25px rgba(255,0,0,0.9); transform: scale(1.05); }
+        }
+        
+        /* Improved Methane Structure Animation */
+        #methane-view .carbon::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 15px;
+            height: 15px;
+            background-color: rgba(160, 160, 160, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: core-pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes core-pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.6; }
+        }
+        
+        /* FINAL FIX: Ensure hydrogen atoms orbit correctly and overlap bond ends */
+        #methane-view .hydrogen {
+            transform-origin: center;
+            margin-left: -14px; /* Half of hydrogen width to center it */
+            margin-top: -14px; /* Half of hydrogen height to center it */
+        }
+        
+        #methane-view .hydrogen1 {
+            animation: orbit1 8s linear infinite;
+        }
+        #methane-view .hydrogen2 {
+            animation: orbit2 8s linear infinite;
+        }
+        #methane-view .hydrogen3 {
+            animation: orbit3 8s linear infinite;
+        }
+        #methane-view .hydrogen4 {
+            animation: orbit4 8s linear infinite;
+        }
+        
+        /* Updated orbit animations to ensure hydrogens are at the end of bonds */
+        @keyframes orbit1 {
+            0% { transform: rotate(0deg) translateX(65px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(65px) rotate(-360deg); }
+        }
+        @keyframes orbit2 {
+            0% { transform: rotate(90deg) translateX(65px) rotate(-90deg); }
+            100% { transform: rotate(450deg) translateX(65px) rotate(-450deg); }
+        }
+        @keyframes orbit3 {
+            0% { transform: rotate(180deg) translateX(65px) rotate(-180deg); }
+            100% { transform: rotate(540deg) translateX(65px) rotate(-540deg); }
+        }
+        @keyframes orbit4 {
+            0% { transform: rotate(270deg) translateX(65px) rotate(-270deg); }
+            100% { transform: rotate(630deg) translateX(65px) rotate(-630deg); }
+        }
+        
+        /* FURTHER FIXED: Methane bonds centered on the exact middle */
+        .molecule-container {
+            position: relative;
+        }
+        
+        #methane-view .bond {
+            position: absolute;
+            height: 3px;
+            width: 65px; /* Match with hydrogen orbit distance */
+            background-color: rgba(255, 255, 255, 0.7);
+            transform-origin: 0% 50%; /* Origin at left center */
+            z-index: 5;
+        }
+        
+        /* FURTHER FIXED: Individual bonds perfectly centered */
+        #methane-view .bond1 {
+            top: 50%;
+            left: 50%;
+        }
+        
+        #methane-view .bond2 {
+            top: 50%;
+            left: 50%;
+        }
+        
+        #methane-view .bond3 {
+            top: 50%;
+            left: 50%;
+        }
+        
+        #methane-view .bond4 {
+            top: 50%;
+            left: 50%;
+        }
+        
+        /* Enhanced Electron Density View */
+        #electron-view .electron-cloud {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: radial-gradient(
+                rgba(120, 210, 255, 0.9) 0%,
+                rgba(100, 200, 255, 0.5) 20%,
+                rgba(100, 200, 255, 0.2) 40%,
+                rgba(100, 200, 255, 0.1) 60%,
+                transparent 100%
+            );
+            width: 200px;
+            height: 200px;
+            animation: electron-pulse 4s ease-in-out infinite;
+            z-index: 1;
+        }
+        
+        #electron-view .electron-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: rgba(150, 220, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(150, 220, 255, 0.8);
+            z-index: 8; /* Below carbon but above cloud */
+        }
+        
+        @keyframes electron-pulse {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+        }
+        
+        @keyframes electron-move {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(40px, -20px); }
+            50% { transform: translate(10px, 30px); }
+            75% { transform: translate(-30px, -10px); }
+        }
+        
+        /* Enhanced Bond Energy View */
+        /* FURTHER FIXED: Bond container positioning for perfect center alignment */
+        #bond-view .bond-container {
+            position: absolute;
+            width: 90px;
+            height: 10px;
+            transform-origin: 0% 50%;
+            left: 50%;
+            top: calc(50% - 5px); /* 5px is half the height of container */
+            z-index: 5;
+        }
+        
+        /* Each bond container rotates from the exact center */
+        #bond-view .bond-container:nth-child(2) { transform: rotate(45deg); }
+        #bond-view .bond-container:nth-child(3) { transform: rotate(135deg); }
+        #bond-view .bond-container:nth-child(4) { transform: rotate(225deg); }
+        #bond-view .bond-container:nth-child(5) { transform: rotate(315deg); }
+        
+        #bond-view .bond-line {
+            position: absolute;
+            height: 5px;
+            width: 90px;
+            background: linear-gradient(to right, rgba(255,78,80,0.9), rgba(249,212,35,0.9));
+            transform-origin: left center;
+            animation: bond-energy-pulse 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255,160,0,0.6);
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        #bond-view .energy-indicator {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 0, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
+            z-index: 6;
+            margin-left: -6px; /* Center the indicator */
+            margin-top: -6px; /* Center the indicator */
+        }
+        
+        @keyframes bond-energy-pulse {
+            0% { opacity: 0.6; height: 3px; box-shadow: 0 0 5px rgba(255,160,0,0.4); }
+            50% { opacity: 1; height: 7px; box-shadow: 0 0 15px rgba(255,160,0,0.7); }
+            100% { opacity: 0.6; height: 3px; box-shadow: 0 0 5px rgba(255,160,0,0.4); }
+        }
+        
+        /* Ensure energy indicators don't get cut off */
+        @keyframes energy-move {
+            0% { transform: translateX(0); opacity: 1; }
+            100% { transform: translateX(78px); opacity: 0.3; } /* Adjusted from 90px to 78px */
+        }
+        
+        /* Moved energy level indicator up further to prevent cutoff */
+        .energy-level-indicator {
+            position: absolute;
+            bottom: 50px; /* Increased from 35px to move up further */
+            right: 20px;
+            width: 120px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            padding: 5px;
+            z-index: 4;
+        }
+        
+        .energy-scale {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .energy-label {
+            color: white;
+            font-size: 10px;
+            margin: 2px 0;
+        }
+        
+        .energy-bar {
+            width: 10px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ff4e50, #f9d423);
+            border-radius: 5px;
+        }
+        
+        /* Transition effects between views */
+        .molecule-view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: scale(0.9);
+        }
+        
+        .molecule-view.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        /* Background Effect */
+        .molecule-container {
+            position: relative;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a6c, #2a3a7c, #2a4858);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Atom Labels and Additional Elements */
+        .atom-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            font-weight: bold;
+            font-size: 14px;
+            text-shadow: 0 0 2px white;
+            z-index: 20; /* Ensure labels are always visible */
+        }
+        
+        .hydrogen .atom-label {
+            font-size: 10px;
+        }
+        
+        /* Progressive reveal styles */
+        .reveal-section {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .reveal-section.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Case Study: Chemistry Education</h1>
+        <h2>Molecular Chemistry</h2>
+        
+        <div class="content-container">
+            <div class="left-content">
+<div class="education-level reveal-section" id="reveal-level">
+    <div class="level-icon-container">
+        <div class="school-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <path d="M2 7l10-5 10 5v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z"></path>
+                <path d="M12 22V7"></path>
+                <path d="M12 7H4"></path>
+                <path d="M12 7h8"></path>
+                <path d="M7 12h1v5h-1z"></path>
+                <path d="M16 12h1v5h-1z"></path>
+            </svg>
+        </div>
+    </div>
+    <div class="level-details">
+        <div class="level-title">Secondary School Level</div>
+        <div class="level-bar">
+            <div class="level-segment level-inactive" title="Primary School"></div>
+            <div class="level-segment level-active" title="Secondary School"></div>
+            <div class="level-segment level-inactive" title="University"></div>
+        </div>
+    </div>
+</div>
+                <div class="learning-outcomes reveal-section" id="reveal-outcomes">
+                    <div class="section-title">Learning Objectives</div>
+                    <div class="outcomes-grid">
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Understand the basic structure of molecules</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Examine how electrons are arranged</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Remember key factors affecting bond reactions</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Experiment with bonding rules to observe changes</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-section" id="reveal-vr">
+                    <div class="section-title">VR (Immersion & Observation)</div>
+                    
+                    <div class="vr-benefits">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+    <circle cx="12" cy="12" r="3"></circle>
+    <line x1="12" y1="9" x2="12" y2="3"></line>
+    <line x1="12" y1="15" x2="12" y2="21"></line>
+    <line x1="9" y1="12" x2="3" y2="12"></line>
+    <line x1="15" y1="12" x2="21" y2="12"></line>
+    <line x1="10" y1="10" x2="5" y2="5"></line>
+    <line x1="14" y1="14" x2="19" y2="19"></line>
+    <line x1="14" y1="10" x2="19" y2="5"></line>
+    <line x1="10" y1="14" x2="5" y2="19"></line>
+</svg>
+                            </div>
+                            <div class="benefit-text">Addresses challenges in visualising 3D molecular structures (c.f. textbooks)</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+    <path d="M10 2v6l-5 8h14l-5-8V2"></path>
+    <line x1="8" y1="2" x2="16" y2="2"></line>
+    <path d="M6 20h12a2 2 0 0 0 0-4H6a2 2 0 0 0 0 4z"></path>
+</svg>
+                            </div>
+                            <div class="benefit-text">Enables experimentation with chemical reactions</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5z"></path>
+    <path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z"></path>
+</svg>
+                            </div>
+                            <div class="benefit-text">Provides multi-sensory feedback to reinforce knowledge</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fourth reveal: Key Features Section -->
+                <div class="reveal-section" id="reveal-features">
+                    <div class="section-title">Key Features</div>
+                    
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                3D visualisations of molecular structures and electron orbitals
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Observation of atoms and bonding behaviors from different angles
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Simulation of reaction mechanisms at various scales
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-content">
+                <div class="visualization reveal-section" id="reveal-viz" style="margin-top: 70px;">
+                    <div class="viz-header">
+                        <div class="viz-title">VR Molecular Structure Visualisation</div>
+                        <div class="viz-dropdown">
+                            <button class="dropdown-button" id="current-view">View Options</button>
+                            <div class="dropdown-content">
+                                <a class="dropdown-item" onclick="switchView('methane-view')">Methane Structure</a>
+                                <a class="dropdown-item" onclick="switchView('electron-view')">Electron Density</a>
+                                <a class="dropdown-item" onclick="switchView('bond-view')">Bond Properties</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="molecule-container">
+                        <div class="data-badge" id="data-badge">Methane Structure</div>
+                        <div id="methane-view" class="molecule-view active">
+                            <div class="atom carbon" style="left: 50%; top: 50%; transform: translate(-50%, -50%); transform-origin: center center;">
+                                <div class="atom-label">C</div>
+                            </div>
+							
+                            <div class="atom hydrogen hydrogen1" style="left: 50%; top: 50%;">
+                                <div class="atom-label">H</div>
+                            </div>
+                            <div class="atom hydrogen hydrogen2" style="left: 50%; top: 50%;">
+                                <div class="atom-label">H</div>
+                            </div>
+                            <div class="atom hydrogen hydrogen3" style="left: 50%; top: 50%;">
+                                <div class="atom-label">H</div>
+                            </div>
+                            <div class="atom hydrogen hydrogen4" style="left: 50%; top: 50%;">
+                                <div class="atom-label">H</div>
+                            </div>
+							
+                            <div class="bond bond1" style="transform: rotate(45deg);"></div>
+                            <div class="bond bond2" style="transform: rotate(135deg);"></div>
+                            <div class="bond bond3" style="transform: rotate(225deg);"></div>
+                            <div class="bond bond4" style="transform: rotate(315deg);"></div>
+                        </div>
+						
+                        <div id="electron-view" class="molecule-view">
+                            <div class="atom carbon" style="left: 50%; top: 50%; transform: translate(-50%, -50%); transform-origin: center center;">
+                                <div class="atom-label">C</div>
+                            </div>
+							
+                            <div class="electron-cloud"></div>
+                            <div class="electron-particle" style="left: calc(50% - 40px); top: calc(50% - 40px); animation: electron-move 7s infinite;"></div>
+                            <div class="electron-particle" style="left: calc(50% + 40px); top: calc(50% - 30px); animation: electron-move 8s infinite 1s;"></div>
+                            <div class="electron-particle" style="left: calc(50% - 20px); top: calc(50% + 40px); animation: electron-move 6s infinite 2s;"></div>
+                            <div class="electron-particle" style="left: calc(50% + 20px); top: calc(50% - 45px); animation: electron-move 9s infinite 3s;"></div>
+                            <div class="electron-particle" style="left: calc(50% - 45px); top: calc(50% + 10px); animation: electron-move 7.5s infinite 1.5s;"></div>
+                            <div class="electron-particle" style="left: calc(50% + 35px); top: calc(50% + 40px); animation: electron-move 8.5s infinite 2.5s;"></div>
+                        </div>
+
+                        <div id="bond-view" class="molecule-view">
+                            <div class="atom carbon" style="left: 50%; top: 50%; transform: translate(-50%, -50%); transform-origin: center center;">
+                                <div class="atom-label">C</div>
+                            </div>
+
+                            <div class="bond-container">
+                                <div class="bond-line"></div>
+                                <div class="energy-indicator" style="animation: energy-move 2s infinite;"></div>
+                            </div>
+                            <div class="bond-container">
+                                <div class="bond-line"></div>
+                                <div class="energy-indicator" style="animation: energy-move 2s infinite 0.5s;"></div>
+                            </div>
+                            <div class="bond-container">
+                                <div class="bond-line"></div>
+                                <div class="energy-indicator" style="animation: energy-move 2s infinite 1s;"></div>
+                            </div>
+                            <div class="bond-container">
+                                <div class="bond-line"></div>
+                                <div class="energy-indicator" style="animation: energy-move 2s infinite 1.5s;"></div>
+                            </div>
+
+                            <div class="energy-level-indicator">
+                                <div class="energy-scale">
+                                    <div class="energy-label high">High Energy</div>
+                                    <div class="energy-bar"></div>
+                                    <div class="energy-label low">Low Energy</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script>
+
+let dropdownVisible = false;
+const viewNameMap = {
+    'methane-view': 'Methane Structure',
+    'electron-view': 'Electron Density',
+    'bond-view': 'Bond Energy'
+};
+
+let slideStep = 0;
+const totalSteps = 4;
+let hasEnteredSlide = false;
+
+function progressSlide() {
+    if (slideStep < totalSteps) {
+        slideStep++;
+        revealNextSection();
+
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage('stepHandled', '*');
+        }
+        
+        return true;
+    }
+    
+    return false;
+}
+
+function revealNextSection() {
+    switch(slideStep) {
+        case 1:
+            document.getElementById('reveal-level').classList.add('visible');
+            break;
+        case 2:
+            document.getElementById('reveal-outcomes').classList.add('visible');
+            break;
+        case 3:
+            document.getElementById('reveal-vr').classList.add('visible');
+            break;
+        case 4:
+            document.getElementById('reveal-features').classList.add('visible');
+            document.getElementById('reveal-viz').classList.add('visible');
+            break;
+    }
+}
+
+function resetSlide() {
+    const elements = document.querySelectorAll('.reveal-section');
+    elements.forEach(element => {
+        element.classList.remove('visible');
+    });
+    slideStep = 0;
+}
+
+function revealAll() {
+    const elements = document.querySelectorAll('.reveal-section');
+    elements.forEach(element => {
+        element.classList.add('visible');
+    });
+    slideStep = totalSteps;
+}
+
+function initializeSlide() {
+    if (!hasEnteredSlide) {
+        hasEnteredSlide = true;
+        resetSlide();
+
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: 'supportsSteps',
+                steps: totalSteps
+            }, '*');
+        }
+        
+        console.log("Slide 9 initialized for progressive reveal with combined elements");
+        initVisualization();
+    }
+}
+
+function initVisualization() {
+    const dropdownBtn = document.getElementById('current-view');
+    const dropdownContent = document.querySelector('.dropdown-content');
+    dropdownBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (dropdownVisible) {
+            dropdownContent.style.display = 'none';
+        } else {
+            dropdownContent.style.display = 'block';
+        }
+        dropdownVisible = !dropdownVisible;
+    });
+    document.addEventListener('click', function() {
+        dropdownContent.style.display = 'none';
+        dropdownVisible = false;
+    });
+    dropdownContent.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    createRandomElectrons();
+    createEnergyParticles();
+}
+function createRandomElectrons() {
+    const electronView = document.getElementById('electron-view');
+    const existingDynamicElectrons = electronView.querySelectorAll('.dynamic-electron');
+    existingDynamicElectrons.forEach(el => el.remove());
+    for (let i = 0; i < 8; i++) {
+        const electron = document.createElement('div');
+        electron.className = 'electron-particle dynamic-electron';
+        const angle = Math.random() * Math.PI * 2;
+        const minDistance = 30;
+        const maxDistance = 80;
+        const distance = minDistance + Math.random() * (maxDistance - minDistance);
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+        const duration = 5 + Math.random() * 5;
+        const delay = Math.random() * 2;
+        
+        electron.style.left = `calc(50% + ${x}px)`;
+        electron.style.top = `calc(50% + ${y}px)`;
+        electron.style.animation = `electron-move ${duration}s infinite ${delay}s`;
+        
+        electronView.appendChild(electron);
+    }
+}
+
+function createEnergyParticles() {
+    const bondView = document.getElementById('bond-view');
+    const existingParticles = bondView.querySelectorAll('.energy-particle');
+    existingParticles.forEach(el => el.remove());
+    const bondContainers = bondView.querySelectorAll('.bond-container');
+    bondContainers.forEach((container, index) => {
+        for (let i = 0; i < 3; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'energy-indicator energy-particle';
+            const delay = i * 0.7 + index * 0.5;
+            particle.style.animation = `energy-move 2s infinite ${delay}s`;
+            
+            container.appendChild(particle);
+        }
+    });
+}
+
+function switchView(viewId) {
+    document.querySelectorAll('.molecule-view').forEach(view => {
+        view.classList.remove('active');
+    });
+
+    setTimeout(() => {
+        document.getElementById(viewId).classList.add('active');
+        const badge = document.getElementById('data-badge');
+        badge.textContent = viewNameMap[viewId];
+
+        if (viewId === 'electron-view') {
+            createRandomElectrons();
+        } else if (viewId === 'bond-view') {
+            createEnergyParticles();
+        }
+    }, 300);
+	
+    const dropdownContent = document.querySelector('.dropdown-content');
+    dropdownContent.style.display = 'none';
+    dropdownVisible = false;
+}
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+        if (!hasEnteredSlide) return;
+        
+        if (progressSlide()) {
+            event.stopPropagation();
+        }
+    }
+});
+
+window.addEventListener('message', function(event) {
+    const message = event.data;
+    
+    if (message === 'slideActive') {
+        initializeSlide();
+    }
+    else if (message === 'showAll') {
+        revealAll();
+    }
+    else if (message === 'next') {
+        progressSlide();
+    }
+});
+
+window.onload = function() {
+    if (window === window.parent) {
+        initializeSlide();
+    }
+};
+</script>
+</body>
+</html>

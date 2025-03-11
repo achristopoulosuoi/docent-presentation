@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Molecular Biology</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: white;
+            color: #333;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        h1 {
+            color: #4B3BC2;
+            font-size: 44px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #4B3BC2;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+        .content-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .left-content {
+            flex: 0.9; /* Slightly reduced from original 1 to give more space to right side */
+            min-width: 300px;
+            max-width: 100%;
+            padding-right: 20px;
+        }
+        .right-content {
+            flex: 1.3; /* Slightly increased from original 1.2 to give more space for visualization */
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .section-title {
+            color: #4B3BC2;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        .description ul {
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .description li {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #4B3BC2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .feature-text {
+            flex: 1;
+            line-height: 1.4;
+            font-size: 17px;
+        }
+        .visualization {
+            background-color: #444;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 360px; /* Using same height as slide7.html */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            width: 75%; /* Same as slide7.html */
+            margin-left: auto;
+            margin-right: 5%; /* Same as slide7.html */
+			padding-bottom: 60px;
+        }
+        .mr-environment {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #141e30, #243b55);
+            z-index: 1;
+            overflow: hidden;
+        }
+        .grid-lines {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(to right, rgba(100, 100, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(100, 100, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg) scale(1.5);
+            transform-origin: center bottom;
+            opacity: 0.7;
+            top: -50%;
+            left: -50%;
+        }
+        
+.hand-indicator {
+    position: absolute;
+    bottom: 5px;    /* Changed from bottom: 20px to move it higher up */
+    right: 80px;     /* Keep the same right position */
+    width: 70px;
+    height: 70px;
+    opacity: 0.8;
+    z-index: 3;
+    animation: pulse 2s infinite ease-in-out;
+}
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 0.6; }
+        }
+
+        .mr-interface {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+.protein-status {
+    background-color: rgba(40, 40, 60, 0.8);
+    color: white;
+    font-size: 15px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    border: 1px solid rgba(100, 100, 255, 0.3);
+    transition: 0.3s ease;
+    margin-top: 1px; /* Reduced to position it closer to header */
+    margin-left: 10px; /* Keep left margin */
+    align-self: flex-start; /* Keep left alignment */
+    position: absolute; /* Position absolutely for precise placement */
+    top: 45px; /* Distance from the top of the visualization container */
+    left: 0; /* Align to the left edge */
+    z-index: 5; /* Ensure it appears above other elements */
+}
+
+.protein-display {
+    position: relative;
+    width: 280px;
+    height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.protein-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float 6s infinite ease-in-out;
+    margin-top: 10px; /* Add some additional margin to push it down */
+}
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        .protein-svg {
+            position: absolute;
+            width: 260px;
+            height: 220px;
+            filter: drop-shadow(0 0 10px rgba(100, 100, 255, 0.8));
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        
+        #folded-protein {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        
+        #unfolded-protein {
+            opacity: 0;
+            transform: rotate(-5deg) scale(0.8);
+        }
+        
+        /* Glow effects for protein components */
+        .glow-effect {
+            filter: url(#glow);
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(100, 100, 255, 0.6);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+.action-button {
+    background-color: #5a48f5;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 10px rgba(90, 72, 245, 0.5);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    width: 200px;
+    
+    position: absolute;
+    bottom: -140px;
+    left: 160%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+        
+        .action-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+.action-button:hover {
+    box-shadow: 0 5px 15px rgba(90, 72, 245, 0.7);
+        }
+        
+        .action-button:hover:before {
+            left: 100%;
+        }
+        
+        .hologram-ring {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 2px solid rgba(100, 100, 255, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            animation: expand 3s infinite ease-in-out;
+        }
+        
+        @keyframes expand {
+            0% { width: 290px; height: 290px; opacity: 0.8; }
+            70% { width: 320px; height: 320px; opacity: 0.2; }
+            100% { width: 290px; height: 290px; opacity: 0.8; }
+        }
+
+        .mr-controls {
+            position: absolute;
+            left: 15px; /* Changed from right to left */
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 3;
+        }
+        
+        .mr-control-button {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: rgba(60, 60, 100, 0.7);
+            border: 1px solid rgba(100, 100, 255, 0.5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .mr-control-button:hover {
+            background-color: rgba(100, 100, 255, 0.5);
+            transform: scale(1.1);
+        }
+        
+        .education-level {
+            margin: 0 0 25px 0;
+            padding: 12px;
+            background-color: rgba(75, 59, 194, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .level-icon-container {
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .school-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #4B3BC2;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(75, 59, 194, 0.3);
+        }
+        
+        .level-details {
+            flex: 1;
+        }
+        
+        .level-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .level-description {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        
+        .level-bar {
+            display: flex;
+            margin-top: 10px;
+            background-color: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .level-segment {
+            height: 100%;
+            flex: 1;
+            margin-right: 2px;
+        }
+        
+        .level-segment:last-child {
+            margin-right: 0;
+        }
+        
+        .level-active {
+            background-color: #4B3BC2;
+        }
+        
+        .level-inactive {
+            background-color: rgba(75, 59, 194, 0.2);
+        }
+
+        .learning-outcomes {
+            margin-bottom: 25px;
+        }
+        
+        .outcomes-title {
+            color: #4B3BC2;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            max-width: 100%;
+        }
+        
+        .outcome-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            white-space: nowrap;
+        }
+        
+        .outcome-icon {
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+        
+        .outcome-text {
+            font-size: 16px;
+            color: #444;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+        }
+        
+        .viz-header {
+            background-color: rgba(0,0,0,0.4);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .viz-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .reveal-section {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+            pointer-events: none;
+        }
+        
+        .reveal-section.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+		
+        .mr-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 8px; /* Reduced from 15px to 8px to decrease spacing between cards */
+            margin-top: 8px; /* Reduced from 10px to 8px */
+        }
+
+        .benefit-card {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(75, 59, 194, 0.05);
+            border-left: 4px solid #4B3BC2;
+            border-radius: 0 8px 8px 0;
+            padding: 8px 12px; /* Reduced from 12px 15px to 8px 12px */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .benefit-icon {
+            flex-shrink: 0;
+            margin-right: 12px; /* Slightly reduced from 15px */
+            transform: translateY(2px);
+        }
+
+        .benefit-text {
+            font-size: 16px; /* Slightly reduced from 17px */
+            line-height: 1.3; /* Reduced from 1.4 */
+            color: #333;
+            text-align: justify; /* Added text justification */
+        }
+
+        .data-overlay {
+            position: absolute;
+            top: 50px;
+            right: 15px;
+            width: 180px;
+            background-color: rgba(30, 30, 50, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(100, 100, 255, 0.4);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            color: white;
+            font-size: 13px;
+            padding: 10px;
+            z-index: 10;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.5s, transform 0.5s;
+            pointer-events: none;
+        }
+
+        .data-overlay.visible {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .data-section {
+            margin-bottom: 10px;
+        }
+
+        .data-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .data-title {
+            font-weight: bold;
+            color: #5a48f5;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .data-title svg {
+            margin-right: 5px;
+        }
+
+        .data-value {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3px;
+            font-size: 12px;
+        }
+
+        .data-value:last-child {
+            margin-bottom: 0;
+        }
+
+        .data-label {
+            color: #ccc;
+        }
+
+        .data-number {
+            font-family: monospace;
+        }
+
+        .data-bar-container {
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 2px;
+            margin-bottom: 8px;
+        }
+
+        .data-bar {
+            height: 100%;
+            background-color: #5a48f5;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .data-highlight {
+            color: #FFD700;
+        }
+
+        .binding-site {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba(100, 100, 255, 0.3);
+            border: 2px solid rgba(100, 100, 255, 0.6);
+            box-shadow: 0 0 10px rgba(100, 100, 255, 0.8);
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+
+        .binding-site.visible {
+            opacity: 1;
+            animation: pulse-binding 2s infinite;
+        }
+
+        @keyframes pulse-binding {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+
+        .data-tooltip {
+            position: absolute;
+            background-color: rgba(40, 40, 60, 0.9);
+            border: 1px solid rgba(100, 100, 255, 0.4);
+            border-radius: 4px;
+            padding: 5px 8px;
+            font-size: 12px;
+            color: white;
+            max-width: 150px;
+            z-index: 20;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .data-tooltip.visible {
+            opacity: 1;
+        }
+		
+        .interaction-heat {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at 260px 140px, rgba(255, 0, 0, 0), rgba(255, 0, 0, 0));
+            opacity: 0;
+            transition: opacity 0.5s, background 0.5s;
+            pointer-events: none;
+            z-index: 4;
+        }
+
+        .interaction-heat.active {
+            opacity: 0.4;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background-color: #ff4757;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+        
+.data-button-container {
+    position: absolute;
+    right: 15px;
+    top: 85%;    /* Changed from 50% to 75% to move down */
+    transform: translateY(-50%);
+    z-index: 3;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Case Study: Biology Education</h1>
+        <h2>Molecular Biology</h2>
+        
+        <div class="content-container">
+            <div class="left-content">
+                <!-- First reveal: Education Level -->
+                <div class="education-level reveal-section" id="reveal-level">
+                    <div class="level-icon-container">
+                        <div class="school-icon">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="level-details">
+                        <div class="level-title">Higher Education Level</div>
+                        <div class="level-bar">
+                            <div class="level-segment level-inactive" title="Primary School"></div>
+                            <div class="level-segment level-inactive" title="Secondary School"></div>
+                            <div class="level-segment level-active" title="Higher Education"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="learning-outcomes reveal-section" id="reveal-outcomes">
+                    <div class="outcomes-title">Learning Objectives</div>
+                    <div class="outcomes-grid">
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Examine how proteins fold into complex shapes</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Identify how molecules bind to proteins</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Understand how structural changes affect protein function</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Connect protein structure to biological activity</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="reveal-section" id="reveal-mr">
+                    <div class="section-title">MR (Experimentation & Real-World Integration)</div>
+                    
+                    <div class="mr-benefits">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                                    <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                                    <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <div class="benefit-text">Facilitates interaction and experimentation</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <div class="benefit-text">Supports collaborative scientific examination</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="benefit-text">Bridges theory and laboratory practice</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal-section" id="reveal-features">
+                    <div class="section-title">Key Features</div>
+                    
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Interaction with (virtual) protein structures from multiple perspectives
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Controls that simulate actual laboratory manipulation techniques
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Data overlay showing relevant information in real-time
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-content">
+                <div class="visualization reveal-section" id="reveal-viz" style="margin-top: 70px;">
+                    <div class="viz-header">
+                        <div class="viz-title">Mixed Reality Protein Visualisation</div>
+                    </div>
+                    
+                    <div class="mr-environment">
+                        <div class="grid-lines"></div>
+                        <div class="hologram-ring"></div>
+                        <div class="hologram-ring" style="animation-delay: -1s;"></div>
+                        <div class="hologram-ring" style="animation-delay: -2s;"></div>
+                    </div>
+					
+                    <div class="mr-interface">
+                        <div class="data-overlay" id="data-overlay">
+                            <div class="data-section">
+                                <div class="data-title">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                    </svg>
+                                    Binding Analysis
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">Affinity:</span>
+                                    <span class="data-number" id="binding-affinity">0.00 nM</span>
+                                </div>
+                                <div class="data-bar-container">
+                                    <div class="data-bar" id="affinity-bar" style="width: 0%"></div>
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">H-Bonds:</span>
+                                    <span class="data-number" id="h-bonds">0</span>
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">Stability:</span>
+                                    <span class="data-number" id="stability-value">0%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="data-section">
+                                <div class="data-title">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M12 8v4"></path>
+                                        <path d="M12 16h.01"></path>
+                                    </svg>
+                                    Active Site
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">pH:</span>
+                                    <span class="data-number" id="ph-value">7.0</span>
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">Temperature:</span>
+                                    <span class="data-number" id="temp-value">25°C</span>
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">Activity:</span>
+                                    <span class="data-number data-highlight" id="activity-value">0%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="data-section">
+                                <div class="data-title">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    </svg>
+                                    Structure
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">Alpha Helix:</span>
+                                    <span class="data-number" id="alpha-helix">0%</span>
+                                </div>
+                                <div class="data-value">
+                                    <span class="data-label">Beta Sheet:</span>
+                                    <span class="data-number" id="beta-sheet">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add binding site indicators for protein -->
+                        <div class="binding-site" id="binding-site-1" style="top: 125px; left: 195px;"></div>
+                        <div class="binding-site" id="binding-site-2" style="top: 165px; left: 195px;"></div>
+                        <div class="binding-site" id="binding-site-3" style="top: 205px; left: 195px;"></div>
+                        <div class="interaction-heat" id="interaction-heat"></div>
+                        <div class="data-tooltip" id="data-tooltip"></div>
+
+                        <div class="protein-status" id="protein-status">Folded Protein Structure</div>
+                        
+                        <div class="protein-display">
+                            <div class="protein-wrapper">
+                                <svg width="0" height="0">
+                                    <defs>
+                                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                            <feGaussianBlur stdDeviation="4" result="blur"/>
+                                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                                        </filter>
+                                    </defs>
+                                </svg>
+                                <svg id="folded-protein" class="protein-svg" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M30,125 Q40,95 50,125 Q60,155 70,125 Q80,95 90,125" stroke="#FF69B4" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#glow)" />
+                                    <rect x="130" y="70" width="40" height="30" fill="#1E90FF" rx="3" filter="url(#glow)" />
+                                    <rect x="130" y="110" width="40" height="30" fill="#1E90FF" rx="3" filter="url(#glow)" />
+                                    <rect x="130" y="150" width="40" height="30" fill="#1E90FF" rx="3" filter="url(#glow)" />
+                                    <path d="M170,85 Q195,85 220,105" stroke="#32CD32" stroke-width="6" fill="none" filter="url(#glow)" />
+                                    <path d="M170,125 Q195,125 220,125" stroke="#32CD32" stroke-width="6" fill="none" filter="url(#glow)" />
+                                    <path d="M170,165 Q195,165 220,145" stroke="#32CD32" stroke-width="6" fill="none" filter="url(#glow)" />
+                                    <circle cx="240" cy="125" r="42" fill="#6a29cc" filter="url(#glow)" />
+                                    <circle cx="240" cy="125" r="40" fill="#8A2BE2" />
+                                    <circle cx="260" cy="140" r="22" fill="#8b4d00" filter="url(#glow)" />
+                                    <circle cx="260" cy="140" r="20" fill="#b36200" />
+                                    <circle cx="255" cy="135" r="10" fill="#ffc107" filter="url(#glow)" opacity="0.8" />
+                                    <circle cx="255" cy="135" r="8" fill="#FFD700" />
+                                </svg>
+                                <svg id="unfolded-protein" class="protein-svg" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20,125 L280,125" stroke="#FF69B4" stroke-width="8" fill="none" stroke-linecap="round" filter="url(#glow)" />
+                                    <rect x="60" y="90" width="30" height="25" fill="#1E90FF" rx="3" filter="url(#glow)" />
+                                    <rect x="110" y="90" width="30" height="25" fill="#1E90FF" rx="3" filter="url(#glow)" />
+                                    <rect x="160" y="90" width="30" height="25" fill="#1E90FF" rx="3" filter="url(#glow)" />
+                                    <path d="M75,115 L75,160" stroke="#32CD32" stroke-width="6" fill="none" filter="url(#glow)" />
+                                    <path d="M125,115 L125,160" stroke="#32CD32" stroke-width="6" fill="none" filter="url(#glow)" />
+                                    <path d="M175,115 L175,160" stroke="#32CD32" stroke-width="6" fill="none" filter="url(#glow)" />
+                                    <circle cx="240" cy="180" r="42" fill="#6a29cc" filter="url(#glow)" />
+                                    <circle cx="240" cy="180" r="40" fill="#8A2BE2" />
+                                    <circle cx="260" cy="195" r="22" fill="#8b4d00" filter="url(#glow)" />
+                                    <circle cx="260" cy="195" r="20" fill="#b36200" />
+                                    <circle cx="255" cy="190" r="10" fill="#ffc107" filter="url(#glow)" opacity="0.8" />
+                                    <circle cx="255" cy="190" r="8" fill="#FFD700" />
+                                </svg>
+                                <div class="particles" id="particles"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mr-controls">
+                        <div class="mr-control-button" title="Rotate">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                                <path d="M3 3v5h5"></path>
+                            </svg>
+                        </div>
+                        <div class="mr-control-button" title="Zoom">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                <line x1="11" y1="8" x2="11" y2="14"></line>
+                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                        </div>
+                        <div class="mr-control-button" title="Move">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M5 9l-3 3 3 3"></path>
+                                <path d="M9 5l3-3 3 3"></path>
+                                <path d="M15 19l-3 3-3-3"></path>
+                                <path d="M19 9l3 3-3 3"></path>
+                                <path d="M2 12h20"></path>
+                                <path d="M12 2v20"></path>
+                            </svg>
+                        </div>
+                        <button class="action-button" id="toggle-button">Show Unfolded State</button>
+                    </div>
+
+                    <div class="data-button-container">
+                        <div class="mr-control-button" title="Data Analysis" id="data-button" style="position: relative;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <path d="M21 16V8.00002C20.9996 7.6493 20.9071 7.30483 20.7315 7.00119C20.556 6.69754 20.3037 6.44539 20 6.27002L13 2.27002C12.696 2.09449 12.3511 2.00208 12 2.00208C11.6489 2.00208 11.304 2.09449 11 2.27002L4 6.27002C3.69626 6.44539 3.44398 6.69754 3.26846 7.00119C3.09294 7.30483 3.00036 7.6493 3 8.00002V16C3.00036 16.3508 3.09294 16.6952 3.26846 16.9989C3.44398 17.3025 3.69626 17.5547 4 17.73L11 21.73C11.304 21.9056 11.6489 21.998 12 21.998C12.3511 21.998 12.696 21.9056 13 21.73L20 17.73C20.3037 17.5547 20.556 17.3025 20.7315 16.9989C20.9071 16.6952 20.9996 16.3508 21 16Z"></path>
+                                <path d="M3.27002 6.96002L12 12L20.73 6.96002"></path>
+                                <path d="M12 22.08V12"></path>
+                            </svg>
+                            <div class="notification-badge">!</div>
+                        </div>
+                    </div>
+                    <svg class="hand-indicator" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                        <path d="M11 11.5v-1a1.5 1.5 0 0 1 3 0V12"></path>
+                        <path d="M14 10.5a1.5 1.5 0 0 1 3 0v1.5"></path>
+                        <path d="M17 10.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-2 .208A6 6 0 0 1 7 15.208V12a1.5 1.5 0 1 1 3 0v1.5"></path>
+                        <path d="M5 10.5a1.5 1.5 0 0 1 3 0v1.5"></path>
+                        <path d="M8 7.5a1.5 1.5 0 0 1 3 0v4"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script>
+let dropdownVisible = false;
+let isShowingFolded = true;
+let slideStep = 0;
+const totalSteps = 4; 
+let hasEnteredSlide = false;
+function progressSlide() {
+    if (!hasEnteredSlide) return false;
+    
+    if (slideStep < totalSteps) {
+        slideStep++;
+        revealNextSection();
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage('stepHandled', '*');
+        }
+        
+        return true;
+    }
+    return false;
+}
+function revealNextSection() {
+    switch(slideStep) {
+        case 1:
+            document.getElementById('reveal-level').classList.add('visible');
+            break;
+        case 2:
+            document.getElementById('reveal-outcomes').classList.add('visible');
+            break;
+        case 3:
+            document.getElementById('reveal-mr').classList.add('visible');
+            break;
+        case 4:
+            document.getElementById('reveal-features').classList.add('visible');
+            document.getElementById('reveal-viz').classList.add('visible');
+            setTimeout(function() {
+                initializeProteinVisualization();
+            }, 300);
+            break;
+    }
+}
+function resetSlide() {
+    const elements = document.querySelectorAll('.reveal-section');
+    elements.forEach(element => {
+        element.classList.remove('visible');
+    });
+    slideStep = 0;
+}
+function revealAll() {
+    const elements = document.querySelectorAll('.reveal-section');
+    elements.forEach(element => {
+        element.classList.add('visible');
+    });
+    slideStep = totalSteps;
+    initializeProteinVisualization();
+}
+function initializeSlide() {
+    if (!hasEnteredSlide) {
+        hasEnteredSlide = true;
+        resetSlide();
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: 'supportsSteps',
+                steps: totalSteps
+            }, '*');
+        }
+        
+        console.log("Slide 10 initialized for progressive reveal with combined elements");
+    }
+}
+function animateValue(element, fromValue, toValue) {
+    if (!element) return;
+    const fromMatch = fromValue.match(/^([\d.]+)(.*)$/);
+    const toMatch = toValue.match(/^([\d.]+)(.*)$/);
+    
+    if (!fromMatch || !toMatch) return;
+    
+    const fromNum = parseFloat(fromMatch[1]);
+    const toNum = parseFloat(toMatch[1]);
+    const unit = toMatch[2];
+    
+    const duration = 1500;
+    const start = performance.now();
+    
+    function updateValue(timestamp) {
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        
+        const current = fromNum + (toNum - fromNum) * eased;
+        const formatted = unit.includes('%') || unit.includes('°') 
+            ? current.toFixed(0) + unit
+            : current.toFixed(2) + unit;
+        element.textContent = formatted;
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateValue);
+        }
+    }
+    
+    requestAnimationFrame(updateValue);
+}
+function animateBarWidth(element, fromPercent, toPercent) {
+    if (!element) return;
+    
+    const duration = 1500;
+    const start = performance.now();
+    
+    function updateWidth(timestamp) {
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = fromPercent + (toPercent - fromPercent) * eased;
+        element.style.width = current + '%';
+        if (progress < 1) {
+            requestAnimationFrame(updateWidth);
+        }
+    }
+    
+    requestAnimationFrame(updateWidth);
+}
+function animateDataValues(unfolded = false) {
+    const bindingAffinity = document.getElementById('binding-affinity');
+    const affinityBar = document.getElementById('affinity-bar');
+    const hBonds = document.getElementById('h-bonds');
+    const stabilityValue = document.getElementById('stability-value');
+    const phValue = document.getElementById('ph-value');
+    const tempValue = document.getElementById('temp-value');
+    const activityValue = document.getElementById('activity-value');
+    const alphaHelix = document.getElementById('alpha-helix');
+    const betaSheet = document.getElementById('beta-sheet');
+	
+    if (unfolded) {
+        animateValue(bindingAffinity, "0.00 nM", "175.40 nM");
+        animateBarWidth(affinityBar, 0, 25);
+        animateValue(hBonds, "0", "2");
+        animateValue(stabilityValue, "0%", "34%");
+        animateValue(phValue, "7.0", "7.4");
+        animateValue(tempValue, "25°C", "22°C");
+        animateValue(activityValue, "0%", "15%");
+        animateValue(alphaHelix, "0%", "12%");
+        animateValue(betaSheet, "0%", "8%");
+        document.getElementById('interaction-heat').style.background = 'radial-gradient(circle at 260px 195px, rgba(255, 0, 0, 0.3), rgba(255, 0, 0, 0) 100px)';
+    } else {
+        animateValue(bindingAffinity, "175.40 nM", "0.85 nM");
+        animateBarWidth(affinityBar, 25, 85);
+        animateValue(hBonds, "2", "7");
+        animateValue(stabilityValue, "34%", "92%");
+        animateValue(phValue, "7.4", "7.0");
+        animateValue(tempValue, "22°C", "37°C");
+        animateValue(activityValue, "15%", "98%");
+        animateValue(alphaHelix, "0%", "42%");
+        animateValue(betaSheet, "0%", "35%");
+        document.getElementById('interaction-heat').style.background = 'radial-gradient(circle at 260px 140px, rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0) 70px)';
+    }
+}
+function initializeDataOverlay() {
+    const dataButton = document.getElementById('data-button');
+    const dataOverlay = document.getElementById('data-overlay');
+    const bindingSites = document.querySelectorAll('.binding-site');
+    const interactionHeat = document.getElementById('interaction-heat');
+    const dataTooltip = document.getElementById('data-tooltip');
+    dataButton.addEventListener('click', function() {
+        const isVisible = dataOverlay.classList.contains('visible');
+        
+        if (isVisible) {
+            dataOverlay.classList.remove('visible');
+            bindingSites.forEach(site => site.classList.remove('visible'));
+            interactionHeat.classList.remove('active');
+            dataButton.querySelector('.notification-badge').style.display = 'flex';
+        } else {
+            dataOverlay.classList.add('visible');
+            bindingSites.forEach(site => site.classList.add('visible'));
+            interactionHeat.classList.add('active');
+            dataButton.querySelector('.notification-badge').style.display = 'none';
+            animateDataValues(isShowingFolded ? false : true);
+        }
+    });
+    document.querySelectorAll('.protein-svg path, .protein-svg rect, .protein-svg circle').forEach(element => {
+        element.addEventListener('mouseenter', function(event) {
+            let content = '';
+            let name = '';
+            if (this.getAttribute('fill') === '#FF69B4' || this.getAttribute('stroke') === '#FF69B4') {
+                name = 'Peptide Chain';
+                content = 'Primary structure consisting of amino acid sequence';
+            } else if (this.getAttribute('fill') === '#1E90FF') {
+                name = 'Binding Site';
+                content = 'Region where ligands attach to protein';
+            } else if (this.getAttribute('fill') === '#32CD32' || this.getAttribute('stroke') === '#32CD32') {
+                name = 'Connector';
+                content = 'Flexible region allowing conformational changes';
+            } else if (this.getAttribute('fill') === '#8A2BE2') {
+                name = 'Functional Domain';
+                content = 'Region responsible for protein activity';
+            } else if (this.getAttribute('fill') === '#b36200') {
+                name = 'Active Site';
+                content = 'Region where catalytic activity occurs';
+            } else if (this.getAttribute('fill') === '#FFD700') {
+                name = 'Catalytic Residue';
+                content = 'Specific amino acid involved in catalysis';
+            }
+            
+            if (content) {
+                dataTooltip.innerHTML = `<strong>${name}</strong><br>${content}`;
+                dataTooltip.style.left = (event.pageX - 75) + 'px';
+                dataTooltip.style.top = (event.pageY - 80) + 'px';
+                dataTooltip.classList.add('visible');
+				
+                if (name === 'Active Site' || name === 'Binding Site') {
+                    const rect = this.getBoundingClientRect();
+                    const container = document.querySelector('.visualization').getBoundingClientRect();
+                    const x = rect.left - container.left + (rect.width / 2);
+                    const y = rect.top - container.top + (rect.height / 2);
+                    
+                    interactionHeat.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255, 0, 0, 0.5), rgba(255, 0, 0, 0) 70px)`;
+                }
+            }
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            dataTooltip.classList.remove('visible');
+        });
+    });
+    dataButton.querySelector('.notification-badge').style.display = 'flex';
+}
+function initializeProteinVisualization() {
+    const statusLabel = document.getElementById('protein-status');
+    const foldedProtein = document.getElementById('folded-protein');
+    const unfoldedProtein = document.getElementById('unfolded-protein');
+    const toggleButton = document.getElementById('toggle-button');
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 2 + 1) + 's';
+        particle.style.animationDelay = (Math.random() * 2) + 's';
+        particlesContainer.appendChild(particle);
+    }
+    toggleButton.addEventListener('click', function() {
+        if (isShowingFolded) {
+            foldedProtein.style.opacity = '0';
+            foldedProtein.style.transform = 'rotate(5deg) scale(0.8)';
+            
+            setTimeout(() => {
+                unfoldedProtein.style.opacity = '1';
+                unfoldedProtein.style.transform = 'rotate(0deg) scale(1)';
+            }, 400);
+            
+            statusLabel.textContent = 'Unfolded Protein Structure';
+            toggleButton.textContent = 'Show Folded State';
+            particlesContainer.querySelectorAll('.particle').forEach(particle => {
+                particle.style.animation = 'pulse 2s infinite ease-in-out';
+                particle.style.opacity = '0.7';
+            });
+            if (document.getElementById('data-overlay').classList.contains('visible')) {
+                animateDataValues(true);
+            }
+        } else {
+            unfoldedProtein.style.opacity = '0';
+            unfoldedProtein.style.transform = 'rotate(-5deg) scale(0.8)';
+            
+            setTimeout(() => {
+                foldedProtein.style.opacity = '1';
+                foldedProtein.style.transform = 'rotate(0deg) scale(1)';
+            }, 400);
+            
+            statusLabel.textContent = 'Folded Protein Structure';
+            toggleButton.textContent = 'Show Unfolded State';
+            particlesContainer.querySelectorAll('.particle').forEach(particle => {
+                particle.style.animation = '';
+                particle.style.opacity = '0';
+            });
+            if (document.getElementById('data-overlay').classList.contains('visible')) {
+                animateDataValues(false);
+            }
+        }
+        isShowingFolded = !isShowingFolded;
+    });
+    document.querySelectorAll('.protein-svg path, .protein-svg rect, .protein-svg circle').forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            if (!element.hasAttribute('filter')) {
+                element.setAttribute('filter', 'url(#glow)');
+            }
+            element.style.transform = 'scale(1.05)';
+            element.style.transition = 'transform 0.3s ease';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            if (element.classList.contains('glow-effect')) {
+                element.setAttribute('filter', 'url(#glow)');
+            }
+            element.style.transform = 'scale(1)';
+        });
+    });
+    initializeDataOverlay();
+}
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowRight') {
+        if (progressSlide()) {
+            event.stopPropagation();
+        }
+    }
+});
+window.addEventListener('message', function(event) {
+    const message = event.data;
+    
+    if (message === 'slideActive') {
+        initializeSlide();
+    }
+    else if (message === 'showAll') {
+        revealAll();
+    }
+    else if (message === 'next') {
+        progressSlide();
+    }
+});
+
+window.onload = function() {
+    if (window === window.parent) {
+        initializeSlide();
+    }
+};
+</script>
+</body>
+</html>

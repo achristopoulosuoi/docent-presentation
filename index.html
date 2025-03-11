@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Technology in Education Presentation</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: Arial, sans-serif;
+        }
+        
+        #presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+        }
+        
+        .slide-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            overflow: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .slide-frame::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .slide-frame.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background-color: #ff0000;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: transparent;
+            color: rgba(0, 0, 0, 0.7);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 9999;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            text-shadow: 0 0 1px white, 0 0 2px white, 0 0 3px white;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+        }
+        
+        .slide-counter:hover {
+            opacity: 1;
+        }
+        
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.4);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            z-index: 9999;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            display: none;
+        }
+        
+        .timer:hover {
+            opacity: 1;
+        }
+        
+        #nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #message-overlay {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        #nav-buttons {
+            display: none;
+        }
+        
+        .nav-button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: opacity 0.3s;
+            font-size: 16px;
+        }
+        
+        .nav-button:hover {
+            opacity: 1;
+        }
+        
+        #key-trap {
+            position: fixed;
+            top: -1000px;
+            left: -1000px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="presentation-container"></div>
+    <div class="progress-bar" id="progress-bar"></div>
+    <div class="slide-counter" id="slide-counter">1/16</div>
+    <div class="timer" id="timer">00:00</div>
+    <div id="nav-overlay"></div>
+    <div id="message-overlay"></div>
+    
+    <input type="text" id="key-trap" />
+    
+    <div id="nav-buttons">
+        <button class="nav-button" id="prev-btn">◀</button>
+        <button class="nav-button" id="next-btn">▶</button>
+    </div>
+    
+    <script>
+        const totalSlides = 16;
+        let currentSlide = 1;
+        let isNavigationEnabled = true;
+        let navigationTimer = null;
+        let timerRunning = false;
+        let timerStart = 0;
+        let timerInterval = null;
+        let timerElement = document.getElementById('timer');
+        let navigationHandledBySlide = false;
+        let slidesWithSteps = {};
+        const container = document.getElementById('presentation-container');
+
+        function startTimer() {
+            if (!timerRunning) {
+                timerElement.style.display = 'block';
+                timerRunning = true;
+                timerStart = Date.now();
+                updateTimer();
+                
+                timerInterval = setInterval(updateTimer, 1000);
+                
+                if (event && (event.key === 'a' || event.key === 'A')) {
+                    showMessage("Timer started");
+                }
+            }
+        }
+        
+        function stopTimer() {
+            if (timerRunning) {
+                timerRunning = false;
+                clearInterval(timerInterval);
+                showMessage("Timer stopped");
+            }
+        }
+        
+        function resetTimer() {
+            stopTimer();
+            timerElement.textContent = "00:00";
+            timerElement.style.display = 'none';
+        }
+        
+        function updateTimer() {
+            if (!timerRunning) return;
+            
+            const elapsedMs = Date.now() - timerStart;
+            const elapsedSecs = Math.floor(elapsedMs / 1000);
+            
+            const minutes = Math.floor(elapsedSecs / 60);
+            const seconds = elapsedSecs % 60;
+            
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        function checkAllSlidesLoaded() {
+            const loadedSlides = document.querySelectorAll('.slide-frame');
+            showMessage(`Loaded ${loadedSlides.length} of ${totalSlides} slides`);
+            
+            if (loadedSlides.length < totalSlides) {
+                for (let i = 1; i <= totalSlides; i++) {
+                    if (!document.getElementById(`slide-${i}`)) {
+                        loadSlide(i);
+                    }
+                }
+            }
+        }
+        function loadSlide(i) {
+            const iframe = document.createElement('iframe');
+            iframe.className = 'slide-frame';
+            iframe.id = `slide-${i}`;
+            iframe.src = `slide${i}.html`;
+            iframe.setAttribute('allowfullscreen', 'true');
+            iframe.setAttribute('scrolling', 'no');
+            iframe.onload = function() {
+                console.log(`Slide ${i} loaded successfully`);
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    const style = iframeDoc.createElement('style');
+                    style.textContent = `
+                        body, html {
+                            overflow: hidden !important;
+                            scrollbar-width: none !important;
+                            -ms-overflow-style: none !important;
+                        }
+                        
+                        ::-webkit-scrollbar {
+                            display: none !important;
+                        }
+                    `;
+                    iframeDoc.head.appendChild(style);
+                } catch (e) {
+                    console.error(`Could not modify iframe content for slide ${i}`, e);
+                }
+            };
+            
+            iframe.onerror = function() {
+                console.error(`Failed to load slide ${i}`);
+            };
+            
+            if (i === 1) {
+                iframe.classList.add('active');
+            }
+            
+            container.appendChild(iframe);
+        }
+        for (let i = 1; i <= totalSlides; i++) {
+            loadSlide(i);
+        }
+        function showSlide(slideNumber) {
+            if (slideNumber < 1 || slideNumber > totalSlides) return;
+            
+            const previousSlide = currentSlide;
+            
+            document.querySelectorAll('.slide-frame').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            const slide = document.getElementById(`slide-${slideNumber}`);
+            if (slide) {
+                slide.classList.add('active');
+                currentSlide = slideNumber;
+                updateProgressBar();
+                if (slide.contentWindow) {
+                    setTimeout(() => {
+                        slide.contentWindow.postMessage('slideActive', '*');
+                    }, 50);
+                }
+                
+                if (previousSlide === 1 && currentSlide === 2 && !timerRunning) {
+                    startTimer();
+                }
+                
+                if (currentSlide === totalSlides && timerRunning) {
+                    stopTimer();
+                }
+                navigationHandledBySlide = false;
+            } else {
+                showMessage(`Error: Slide ${slideNumber} not found!`);
+                loadSlide(slideNumber);
+            }
+        }
+        
+        function goToPrevSlide() {
+            if (!isNavigationEnabled) return;
+            disableNavigation();
+            let navigationProcessed = false;
+            const currentFrame = document.getElementById(`slide-${currentSlide}`);
+            if (currentFrame && currentFrame.contentWindow) {
+                currentFrame.contentWindow.postMessage('showAll', '*');
+                setTimeout(() => {
+                    if (!navigationProcessed && currentSlide > 1) {
+                        navigationProcessed = true;
+                        showSlide(currentSlide - 1);
+                    }
+                }, 150);
+            } else {
+                if (currentSlide > 1) {
+                    navigationProcessed = true;
+                    showSlide(currentSlide - 1);
+                }
+            }
+            setTimeout(() => {
+                if (!navigationProcessed && currentSlide > 1) {
+                    showSlide(currentSlide - 1);
+                }
+            }, 300);
+        }
+        
+        function goToNextSlide() {
+            if (!isNavigationEnabled) return;
+            disableNavigation();
+            const currentFrame = document.getElementById(`slide-${currentSlide}`);
+            if (currentFrame && currentFrame.contentWindow) {
+                currentFrame.contentWindow.postMessage('next', '*');
+                setTimeout(() => {
+                    if (!navigationHandledBySlide && currentSlide < totalSlides) {
+                        showSlide(currentSlide + 1);
+                    }
+                    navigationHandledBySlide = false;
+                }, 100);
+            } else {
+                if (currentSlide < totalSlides) {
+                    showSlide(currentSlide + 1);
+                }
+            }
+        }
+        
+        function disableNavigation() {
+            isNavigationEnabled = false;
+            
+            if (navigationTimer) {
+                clearTimeout(navigationTimer);
+            }
+            
+            navigationTimer = setTimeout(() => {
+                isNavigationEnabled = true;
+                document.getElementById('key-trap').focus();
+            }, 300);
+        }
+        
+        function updateProgressBar() {
+            const progressPercentage = (currentSlide - 1) / (totalSlides - 1) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            
+            document.getElementById('slide-counter').textContent = `${currentSlide}/${totalSlides}`;
+        }
+        
+        function showMessage(message, duration = 2000) {
+            const messageOverlay = document.getElementById('message-overlay');
+            messageOverlay.textContent = message;
+            messageOverlay.style.opacity = '1';
+            
+            setTimeout(() => {
+                messageOverlay.style.opacity = '0';
+            }, duration);
+        }
+        window.addEventListener('message', function(event) {
+            const message = event.data;
+            
+            if (message === 'stepHandled') {
+                navigationHandledBySlide = true;
+            }
+            if (message && message.type === 'supportsSteps') {
+                slidesWithSteps[currentSlide] = message.steps;
+                console.log(`Slide ${currentSlide} supports ${message.steps} steps`);
+            }
+        });
+        function handleKeyDown(event) {
+            if (event.repeat) return;
+            
+            switch (event.key) {
+                case 'ArrowLeft':
+                    goToPrevSlide();
+                    event.preventDefault();
+                    break;
+                    
+                case 'ArrowRight':
+                    goToNextSlide();
+                    event.preventDefault();
+                    break;
+                    
+                case 'Home':
+                    if (isNavigationEnabled) {
+                        disableNavigation();
+                        showSlide(1);
+                    }
+                    event.preventDefault();
+                    break;
+                    
+                case 'End':
+                    if (isNavigationEnabled) {
+                        disableNavigation();
+                        showSlide(totalSlides);
+                    }
+                    event.preventDefault();
+                    break;
+                    
+                case 'd':
+                    checkAllSlidesLoaded();
+                    event.preventDefault();
+                    break;
+                    
+                case 'a':
+                case 'A':
+                    startTimer();
+                    event.preventDefault();
+                    break;
+            }
+        }
+        document.addEventListener('keydown', handleKeyDown);
+        const keyTrap = document.getElementById('key-trap');
+        keyTrap.addEventListener('keydown', handleKeyDown);
+        const navOverlay = document.getElementById('nav-overlay');
+        navOverlay.addEventListener('click', function(event) {
+            const x = event.clientX;
+            const width = window.innerWidth;
+            
+            if (x < width * 0.3) {
+                goToPrevSlide();
+            } else if (x > width * 0.7) {
+                goToNextSlide();
+            }
+        });
+        document.addEventListener('mousemove', function() {
+            navOverlay.style.pointerEvents = 'auto';
+            
+            clearTimeout(window.navOverlayTimer);
+            window.navOverlayTimer = setTimeout(() => {
+                navOverlay.style.pointerEvents = 'none';
+            }, 100);
+        });
+        document.getElementById('prev-btn').addEventListener('click', goToPrevSlide);
+        document.getElementById('next-btn').addEventListener('click', goToNextSlide);
+        setInterval(() => {
+            const activeElement = document.activeElement;
+            const isNavButton = activeElement.classList && activeElement.classList.contains('nav-button');
+            
+            if (!isNavButton && activeElement !== keyTrap) {
+                keyTrap.focus();
+            }
+        }, 500);
+        setInterval(() => {
+            if (!isNavigationEnabled) {
+                console.log("Navigation re-enabled by watchdog");
+                isNavigationEnabled = true;
+            }
+        }, 3000);
+        
+        setTimeout(() => {
+            keyTrap.focus();
+            setTimeout(checkAllSlidesLoaded, 1000);
+        }, 500);
+        updateProgressBar();
+        window.checkSlides = checkAllSlidesLoaded;
+    </script>
+</body>
+</html>

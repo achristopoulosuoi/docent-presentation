@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Technologies in Education: Evaluation Methods</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+            color: #333;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4B3BC2;
+            font-size: 38px; /* Reduced font size */
+            margin-top: 0;
+            margin-bottom: 20px; /* Reduced bottom margin */
+        }
+        h2 {
+            color: #4B3BC2;
+            font-size: 28px; /* Reduced from 32px */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center; /* Center the heading */
+        }
+        .two-column {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .column {
+            flex: 1;
+            position: relative;
+            padding: 0 25px; /* Increased padding to columns */
+        }
+		
+        .methods-transition {
+            position: absolute;
+            left: -65px; /* Moved even further left */
+            top: 145px; /* Position arrow to start well below the first label */
+            height: 360px; /* Further reduced height */
+            width: 45px; /* Slightly wider area */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .transition-arrow {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            width: 100%; /* Full width of the container */
+        }
+        
+        .arrow-label {
+            font-size: 15px;
+            font-weight: bold;
+            color: #4B3BC2;
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            padding: 10px 6px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            text-align: center;
+            z-index: 2;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+
+		.arrow-label.traditional {
+			position: absolute;
+			top: -70px;
+		}
+
+		.arrow-label.modern {
+			position: absolute;
+			bottom: -70px; /* Moved up from -85px */
+		}
+		.arrow-line {
+			position: absolute;
+			top: 30px;
+			bottom: 35px;
+			width: 4px;
+			background-color: #4B3BC2;
+			z-index: 1;
+		}
+		
+		.arrow-pointer {
+			position: absolute;
+			bottom: 25px;
+			width: 0;
+			height: 0;
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			border-top: 15px solid #4B3BC2;
+			z-index: 2;
+			/* Removed animation property */
+			background-color: transparent;
+		}
+
+		@keyframes pointerPulse {
+			0%, 100% { transform: translateY(0); opacity: 1; }
+			50% { transform: translateY(5px); opacity: 0.7; }
+		}
+
+		.arrow-pointer::before {
+			content: '';
+			position: absolute;
+			top: -4px;
+			left: -5px;
+			width: 10px;
+			height: 10px;
+			background-color: white;
+			z-index: -1;
+		}
+        
+        @keyframes pointerPulse {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(5px); opacity: 0.7; }
+        }
+        .background-shape {
+            display: none;
+        }
+        .card-icon-bg {
+            display: none;
+        }
+        .evaluation-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .evaluation-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .evaluation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #4B3BC2;
+            color: white;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-icon {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card-title {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .card-content {
+            padding: 12px;
+        }
+        .method-list {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .method-list li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+            font-size: 15px;
+        }
+        .process-flow {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            position: relative;
+            border: 1px solid #e0e0e0;
+        }
+        .flow-title {
+            color: #4B3BC2;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .flow-steps {
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+            padding: 15px 0;
+        }
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 110px;
+            text-align: center;
+            z-index: 2;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #4B3BC2;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 8px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .flow-step:hover .step-circle {
+            transform: scale(1.08);
+        }
+        .step-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .flow-line {
+            position: absolute;
+            top: 35px;
+            left: 60px;
+            right: 60px;
+            height: 3px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        .best-practices {
+            margin-top: 20px;
+        }
+        .practices-title {
+            color: #4B3BC2;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+.practice-item {
+    background-color: #f9f9f9;
+    border-left: 4px solid #4B3BC2;
+    padding: 15px 20px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+.practice-item:hover {
+    transform: translateX(5px);
+    background-color: #f5f5ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+.practice-title {
+    color: #4B3BC2;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 12px 0;
+    text-align: center;
+}
+.practice-content {
+    display: flex;
+    align-items: flex-start;
+}
+.practice-icon {
+    margin-right: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.practice-text {
+    font-size: 16px;
+    font-weight: normal;
+    color: #333;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+@media (max-width: 900px) {
+    .practice-text {
+        font-size: 15px;
+    }
+    
+    .practice-title {
+        font-size: 16px;
+    }
+}
+        .xr-assessment-scene {
+            position: relative;
+            width: 100%;
+            height: 365px; /* Reduced height */
+            margin-top: 25px; /* Reduced top margin */
+            background: linear-gradient(to bottom, #1a1f35 0%, #0c0e1a 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            border: 1px solid rgba(75, 59, 194, 0.3);
+        }
+		
+        .vr-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            bottom: -100%;
+            left: -50%;
+            background: 
+                linear-gradient(90deg, rgba(75, 59, 194, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(75, 59, 194, 0.1) 1px, transparent 1px);
+            background-size: 35px 35px;
+            transform: rotateX(60deg);
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            from { background-position: 0 0; }
+            to { background-position: 0 35px; }
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(106, 90, 205, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(106, 90, 205, 0.6);
+            animation: particleFloat 7s linear infinite;
+        }
+
+        .particle-1 { left: 10%; top: 20%; animation-delay: 0s; }
+        .particle-2 { left: 30%; top: 50%; animation-delay: 1s; }
+        .particle-3 { left: 50%; top: 30%; animation-delay: 2s; }
+        .particle-4 { left: 70%; top: 60%; animation-delay: 3s; }
+        .particle-5 { left: 90%; top: 10%; animation-delay: 4s; }
+        .particle-6 { left: 25%; top: 70%; animation-delay: 2.5s; }
+        .particle-7 { left: 75%; top: 25%; animation-delay: 3.5s; }
+        .particle-8 { left: 40%; top: 80%; animation-delay: 1.5s; }
+        
+        @keyframes particleFloat {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translate(-60px, -60px) rotate(360deg); opacity: 0; }
+        }
+
+        .visualization-area {
+            position: absolute;
+            width: 96%;
+            height: 300px;
+            top: 25px;
+            left: 2%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 22px;
+        }
+		
+        .visualization {
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+        .data-vis {
+            background: rgba(29, 41, 81, 0.6);
+            border: 1px solid rgba(75, 59, 194, 0.7);
+            animation: floatUp 6s infinite ease-in-out;
+            grid-column: 1;
+            grid-row: 1;
+        }
+        
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        
+        .chart-header {
+            height: 25px;
+            background: rgba(75, 59, 194, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+        
+        .chart-title {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .chart-bars {
+            display: flex;
+            height: calc(100% - 30px);
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 15px;
+            margin-top: 5px;
+        }
+        
+        .chart-bar {
+            width: 15%;
+            background: rgba(75, 59, 194, 0.8);
+            border-radius: 4px 4px 0 0;
+            box-shadow: 0 0 8px rgba(75, 59, 194, 0.4);
+            animation: barGrow 5s infinite;
+        }
+
+        .bar-1 { height: 40%; animation-delay: 0.2s; }
+        .bar-2 { height: 80%; animation-delay: 0.4s; }
+        .bar-3 { height: 60%; animation-delay: 0.6s; }
+        .bar-4 { height: 90%; animation-delay: 0.8s; }
+        
+        @keyframes barGrow {
+            0%, 100% { height: 40%; }
+            50% { height: 90%; }
+        }
+
+        .usability-vis {
+            background: rgba(29, 41, 81, 0.6);
+            border: 1px solid rgba(156, 39, 176, 0.7);
+            grid-column: 2;
+            grid-row: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .usability-header {
+            height: 25px;
+            background: rgba(156, 39, 176, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            flex-shrink: 0;
+        }
+        
+        .usability-title {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .usability-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+            flex-grow: 1;
+        }
+        
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        
+        .task-checkbox {
+            width: 14px;
+            height: 14px;
+            min-width: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+            margin-right: 8px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .task-checkbox.completed::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 11px;
+            top: -3px;
+            left: 2px;
+        }
+        
+        .task-text {
+            white-space: normal;
+            overflow: visible;
+            font-size: 13px;
+        }
+        
+        .completion-rate {
+            margin-top: auto;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+        }
+        
+        .rate-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(50, 50, 50, 0.5);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .rate-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, rgba(156, 39, 176, 0.8), rgba(156, 39, 176, 0.5));
+            animation: rateFill 4s infinite;
+        }
+        
+        .task-completion-percent {
+            margin-top: 5px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: right;
+        }
+        
+        @keyframes rateFill {
+            0% { width: 0%; }
+            100% { width: 50%; }
+        }
+
+        .eye-tracking-vis {
+            background: rgba(13, 71, 161, 0.5);
+            border: 1px solid rgba(33, 150, 243, 0.7);
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .tracking-header {
+            height: 25px;
+            background: rgba(33, 150, 243, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+        
+        .tracking-title {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .heatmap-container {
+            position: relative;
+            width: 100%;
+            height: calc(100% - 25px);
+            overflow: hidden;
+        }
+        
+        .interface-mockup {
+            position: absolute;
+            width: 90%;
+            height: 80%;
+            top: 10%;
+            left: 5%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .heatmap-hotspot {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 70%);
+            opacity: 0;
+            animation: hotspotPulse 5s infinite;
+        }
+
+        .hotspot-1 {
+            width: 50px;
+            height: 50px;
+            top: 30%;
+            left: 60%;
+            animation-delay: 0.5s;
+        }
+        
+        .hotspot-2 {
+            width: 65px;
+            height: 65px;
+            top: 60%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+        
+        .hotspot-3 {
+            width: 35px;
+            height: 35px;
+            top: 20%;
+            left: 20%;
+            animation-delay: 3.5s;
+        }
+        
+        @keyframes hotspotPulse {
+            0%, 100% { opacity: 0; transform: scale(0.8); }
+            20%, 80% { opacity: 0.7; transform: scale(1); }
+        }
+        
+        .eye-gaze {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: transparent;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+            z-index: 2;
+            animation: gazeMove 8s infinite;
+        }
+        
+        @keyframes gazeMove {
+            0%, 100% { top: 30%; left: 60%; }
+            25% { top: 60%; left: 30%; }
+            50% { top: 20%; left: 20%; }
+            75% { top: 40%; left: 50%; }
+        }
+
+        .analytics-vis {
+            background: rgba(13, 71, 161, 0.5);
+            border: 1px solid rgba(46, 125, 50, 0.7);
+            grid-column: 2;
+            grid-row: 2;
+        }
+        
+        .analytics-header {
+            height: 25px;
+            background: rgba(46, 125, 50, 0.8);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+        }
+        
+        .analytics-title {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .dashboard {
+            padding: 12px;
+            height: calc(100% - 45px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+.dashboard-row {
+    height: 25%;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    justify-content: space-between;
+    gap: 10px;
+    overflow: hidden;
+}
+        
+        .dashboard-row-1 {
+            animation: rowHighlight 5s infinite;
+        }
+        
+        @keyframes rowHighlight {
+            0%, 40%, 100% { background: rgba(255, 255, 255, 0.05); }
+            20%, 30% { background: rgba(46, 125, 50, 0.2); }
+        }
+        
+.row-label {
+    width: 110px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 500;
+    padding-right: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+        
+.row-bar {
+    flex: 1;
+    height: 12px;
+    background: rgba(50, 50, 50, 0.5);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+        
+        
+.progress {
+    height: 100%;
+    background: linear-gradient(to right, rgba(46, 125, 50, 0.8), rgba(46, 125, 50, 0.5));
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: progressPulse 4s infinite;
+}
+		
+        .progress-1 { width: 85%; }
+        .progress-2 { width: 80%; }
+        .progress-3 { width: 75%; }
+        
+        @keyframes progressPulse {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 1400px) {
+            .container {
+                max-width: 1400px;
+                padding: 0 50px;
+            }
+            .two-column {
+                gap: 50px;
+            }
+            .column {
+                padding: 0 15px;
+            }
+            .practices-grid {
+                gap: 25px;
+                padding: 0;
+            }
+            .practice-item {
+                padding: 22px 28px;
+            }
+            .practices-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .flow-steps {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            .flow-line {
+                display: none;
+            }
+            .visualization-area {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                height: auto;
+                gap: 12px;
+            }
+            .visualization {
+                grid-column: 1 !important;
+            }
+            .data-vis {
+                grid-row: 1;
+            }
+            .usability-vis {
+                grid-row: 2;
+            }
+            .eye-tracking-vis {
+                grid-row: 3;
+            }
+            .analytics-vis {
+                grid-row: 4;
+            }
+            .xr-assessment-scene {
+                height: 550px;
+            }
+        }
+
+        .reveal-section {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+            pointer-events: none;
+        }
+        
+        .reveal-section.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="reveal-section" id="reveal-title">Immersive Technologies in Education: Evaluation Methods</h1>
+        <div class="two-column">
+            <div class="column">
+                <div class="reveal-section" id="reveal-approaches">
+                    <div class="background-shape shape-1"></div>
+                    <div class="background-shape shape-2"></div>
+                    <h2>Evaluation Approaches</h2>
+                    <div class="methods-transition">
+                        <div class="transition-arrow">
+                            <div class="arrow-label traditional">Traditional</div>
+                            <div class="arrow-line"></div>
+                            <div class="arrow-pointer"></div>
+                            <div class="arrow-label modern">Modern</div>
+                        </div>
+                    </div>
+                    
+                    <div class="evaluation-methods">
+                        <div class="evaluation-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/>
+                                        <path d="M7 13 L10 16 L17 9" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="card-title">User Experience</div>
+                            </div>
+                            <div class="card-content">
+                                <ul class="method-list">
+                                    <li>Self-reported psychometric instruments</li>
+                                    <li>Post-experience interviews</li>
+                                    <li>Focus group discussions</li>
+                                </ul>
+                                <div class="card-icon-bg">
+                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="50" cy="50" r="45" fill="#4B3BC2"/>
+                                        <path d="M30 50 L45 65 L70 35" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="evaluation-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2 12 L7 12 L10 7 L14 17 L17 12 L22 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M2 20 L22 20 M2 4 L22 4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <div class="card-title">Learning Outcomes</div>
+                            </div>
+                            <div class="card-content">
+                                <ul class="method-list">
+                                    <li>Pre-/post-intervention knowledge assessment</li>
+                                    <li>Knowledge retention (repeated measurements)</li>
+                                    <li>Skills transfer evaluation (longitudinal studies)</li>
+                                </ul>
+                                <div class="card-icon-bg">
+                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="10" y="10" width="80" height="80" rx="5" fill="#4B3BC2"/>
+                                        <path d="M25 40 L75 40 M25 60 L75 60" stroke="white" stroke-width="5" stroke-linecap="round"/>
+                                        <circle cx="35" cy="25" r="6" fill="white"/>
+                                        <circle cx="50" cy="25" r="6" fill="white"/>
+                                        <circle cx="65" cy="25" r="6" fill="white"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="evaluation-card">
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="12" cy="8" r="5" fill="none" stroke="white" stroke-width="2"/>
+                                        <path d="M3 21 C3 16, 7 13, 12 13 C17 13, 21 16, 21 21" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <div class="card-title">Behavioural Analysis</div>
+                            </div>
+                            <div class="card-content">
+                                <ul class="method-list">
+                                    <li>Interaction pattern analysis (frequency, sequence)</li>
+                                    <li>Movement tracking (spatial navigation, gestures)</li>
+                                    <li>Eye tracking (gaze fixation, fixation duration)</li>
+                                </ul>
+                                <div class="card-icon-bg">
+                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="50" cy="40" r="20" fill="#4B3BC2"/>
+                                        <path d="M30 75 C 30 60, 50 50, 50 50 C 50 50, 70 60, 70 75" fill="none" stroke="#4B3BC2" stroke-width="8" stroke-linecap="round"/>
+                                        <circle cx="45" cy="38" r="5" fill="white"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+<div class="column">
+    <div class="reveal-section" id="reveal-considerations">
+        <div class="best-practices">
+            <h2>Evaluation Considerations</h2>
+            <div class="practices-grid">
+                <div class="practice-item">
+                    <h3 class="practice-title">Balance Methods</h3>
+                    <div class="practice-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="practice-icon">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
+                        <span class="practice-text">Combine qualitative insights with quantitative metrics</span>
+                    </div>
+                </div>
+                <div class="practice-item">
+                    <h3 class="practice-title">Address Limitations</h3>
+                    <div class="practice-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="practice-icon">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span class="practice-text">Consider hardware and software constraints</span>
+                    </div>
+                </div>
+                <div class="practice-item">
+                    <h3 class="practice-title">Account for Novelty</h3>
+                    <div class="practice-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="practice-icon">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span class="practice-text">Distinguish between novelty appeal and educational value</span>
+                    </div>
+                </div>
+                <div class="practice-item">
+                    <h3 class="practice-title">Long-term Effectiveness</h3>
+                    <div class="practice-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="practice-icon">
+                            <path d="M3 3v18h18"></path>
+                            <path d="M18.4 9.4l-4.2 4.2-2.3-2.3L7.8 15.8"></path>
+                        </svg>
+                        <span class="practice-text">Assess retention and skills transfer longitudinally</span>
+                    </div>
+                </div>
+            </div>
+                        <div class="xr-assessment-scene">
+                            <div class="vr-grid"></div>
+                            <div class="particle particle-1"></div>
+                            <div class="particle particle-2"></div>
+                            <div class="particle particle-3"></div>
+                            <div class="particle particle-4"></div>
+                            <div class="particle particle-5"></div>
+                            <div class="particle particle-6"></div>
+                            <div class="particle particle-7"></div>
+                            <div class="particle particle-8"></div>
+                            <div class="visualization-area">
+                                <div class="visualization data-vis">
+                                    <div class="chart-header">
+                                        <div class="chart-title">Learning Analytics</div>
+                                    </div>
+                                    <div class="chart-bars">
+                                        <div class="chart-bar bar-1"></div>
+                                        <div class="chart-bar bar-2"></div>
+                                        <div class="chart-bar bar-3"></div>
+                                        <div class="chart-bar bar-4"></div>
+                                    </div>
+                                </div>
+                                <div class="visualization usability-vis">
+                                    <div class="usability-header">
+                                        <div class="usability-title">Usability Testing</div>
+                                    </div>
+                                    <div class="usability-content">
+                                        <ul class="task-list">
+                                            <li class="task-item">
+                                                <div class="task-checkbox completed"></div>
+                                                <span class="task-text">Navigate menu</span>
+                                            </li>
+                                            <li class="task-item">
+                                                <div class="task-checkbox completed"></div>
+                                                <span class="task-text">Select object</span>
+                                            </li>
+                                            <li class="task-item">
+                                                <div class="task-checkbox"></div>
+                                                <span class="task-text">Complete task</span>
+                                            </li>
+                                            <li class="task-item">
+                                                <div class="task-checkbox"></div>
+                                                <span class="task-text">Exit experience</span>
+                                            </li>
+                                        </ul>
+                                        <div class="completion-rate">
+                                            <span>Task Completion</span>
+                                            <div class="rate-bar">
+                                                <div class="rate-fill"></div>
+                                            </div>
+                                            <div class="task-completion-percent">50%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="visualization eye-tracking-vis">
+                                    <div class="tracking-header">
+                                        <div class="tracking-title">Eye Tracking</div>
+                                    </div>
+                                    <div class="heatmap-container">
+                                        <div class="interface-mockup"></div>
+                                        <div class="heatmap-hotspot hotspot-1"></div>
+                                        <div class="heatmap-hotspot hotspot-2"></div>
+                                        <div class="heatmap-hotspot hotspot-3"></div>
+                                        <div class="eye-gaze"></div>
+                                    </div>
+                                </div>
+                                <div class="visualization analytics-vis">
+                                    <div class="analytics-header">
+                                        <div class="analytics-title">Assessment Data</div>
+                                    </div>
+                                    <div class="dashboard">
+                                        <div class="dashboard-row dashboard-row-1">
+                                            <div class="row-label">Presence</div>
+                                            <div class="row-bar">
+                                                <div class="progress progress-1"></div>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-row">
+                                            <div class="row-label">Engagement</div>
+                                            <div class="row-bar">
+                                                <div class="progress progress-2"></div>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard-row">
+                                            <div class="row-label">Learning</div>
+                                            <div class="row-bar">
+                                                <div class="progress progress-3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let slideStep = 0;
+        const totalSteps = 2;
+        let hasEnteredSlide = false;
+        function progressSlide() {
+            if (!hasEnteredSlide) return false;
+            
+            if (slideStep < totalSteps) {
+                slideStep++;
+                revealNextSection();
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage('stepHandled', '*');
+                }
+                return true;
+            }
+            return false;
+        }
+        function revealNextSection() {
+            switch(slideStep) {
+                case 1:
+                    document.getElementById('reveal-approaches').classList.add('visible');
+                    break;
+                case 2:
+                    document.getElementById('reveal-considerations').classList.add('visible');
+                    break;
+            }
+        }
+        function resetSlide() {
+            const elements = document.querySelectorAll('.reveal-section');
+            elements.forEach(element => {
+                element.classList.remove('visible');
+            });
+            slideStep = 0;
+        }
+        function revealAll() {
+            const elements = document.querySelectorAll('.reveal-section');
+            elements.forEach(element => {
+                element.classList.add('visible');
+            });
+            slideStep = totalSteps;
+        }
+        function initializeSlide() {
+            if (!hasEnteredSlide) {
+                hasEnteredSlide = true;
+                resetSlide(); // Start fresh
+                document.getElementById('reveal-title').classList.add('visible');
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'supportsSteps',
+                        steps: totalSteps
+                    }, '*');
+                }
+                
+                console.log("Slide 10 initialized for progressive reveal");
+            }
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight') {
+                if (progressSlide()) {
+                    event.stopPropagation();
+                }
+            }
+        });
+        window.addEventListener('message', function(event) {
+            const message = event.data;
+            
+            if (message === 'slideActive') {
+                initializeSlide();
+            }
+            else if (message === 'showAll') {
+                revealAll();
+            }
+            else if (message === 'next') {
+                progressSlide();
+            }
+        });
+        window.onload = function() {
+            if (window === window.parent) {
+                initializeSlide();
+            }
+        };
+    </script>
+</body>
+</html>

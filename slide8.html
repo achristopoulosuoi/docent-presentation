@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Environmental Education</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: white;
+            color: #333;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        h1 {
+            color: #4B3BC2;
+            font-size: 44px;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #4B3BC2;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+        .content-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .left-content {
+            flex: 0.9; /* Slightly reduced from original 1 to give more space to right side */
+            min-width: 300px;
+            max-width: 100%;
+            padding-right: 20px;
+        }
+        .right-content {
+            flex: 1.3; /* Slightly increased from original 1.2 to give more space for visualization */
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .section-title {
+            color: #4B3BC2;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        .description ul {
+            padding-left: 20px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .description li {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #4B3BC2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .feature-text {
+            flex: 1;
+            line-height: 1.4;
+            font-size: 17px;
+        }
+        .visualization {
+            background-color: #444;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 360px; /* INCREASED from original 300px for more vertical space */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            width: 75%; /* INCREASED from original 70% for slightly more width */
+            margin-left: auto;
+            margin-right: 5%; /* Changed from auto to create rightward shift */
+        }
+        .viz-header {
+            background-color: rgba(0,0,0,0.4);
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+        }
+        .viz-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .viz-dropdown {
+            position: relative;
+            z-index: 5;
+        }
+        .dropdown-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: rgba(0,0,0,0.8);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 5;
+            border-radius: 4px;
+        }
+        /* Removed hover behavior to let JavaScript control it */
+        .dropdown-item {
+            color: white;
+            padding: 10px 14px;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        /* Main visualization container */
+        .ecosystem-container {
+            position: relative;
+            height: 100%;
+            background: linear-gradient(to bottom, #1a6c46, #2a5848);
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        /* Common elements */
+        .landscape {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30%;
+            background-color: #287233;
+        }
+        .sky {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(to bottom, #64a0e8, #87CEEB);
+        }
+        .sun {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(#FDB813, #F89406);
+            border-radius: 50%;
+            box-shadow: 0 0 40px rgba(253, 184, 19, 0.7);
+        }
+        
+        /* Data badge */
+        .data-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            z-index: 3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* AR Card Scanning Visual */
+        .ar-card {
+            position: absolute;
+            width: 80px;
+            height: 100px;
+            background-color: white;
+            border-radius: 5px;
+            bottom: 60px;
+            left: 20px;
+            transform: perspective(500px) rotateX(30deg) rotateZ(-10deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 5px;
+        }
+        .scan-effect {
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            background-color: rgba(73, 209, 112, 0.3);
+            top: 0;
+            animation: scanMove 2s linear infinite;
+        }
+        @keyframes scanMove {
+            0% { top: 0; }
+            100% { top: 100px; }
+        }
+        .ar-phone {
+            position: absolute;
+            width: 70px;
+            height: 140px;
+            background-color: #333;
+            border-radius: 10px;
+            bottom: 50px;
+            right: 20px;
+            transform: perspective(500px) rotateX(20deg) rotateZ(10deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 3;
+            overflow: hidden;
+            border: 3px solid #222;
+        }
+        .phone-screen {
+            position: absolute;
+            top: 8px;
+            left: 5px;
+            right: 5px;
+            bottom: 8px;
+            background-color: #666;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .ar-beam {
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(73, 209, 112, 0.8), transparent);
+            top: 50%;
+            left: 50%;
+            transform-origin: left;
+            transform: rotate(-30deg) translateY(-50%);
+            animation: beamPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes beamPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Time slider */
+        .time-slider {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-sizing: border-box;
+            color: white;
+            z-index: 4;
+        }
+        .slider-label {
+            flex: 1;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .slider-track {
+            position: absolute;
+            left: 80px;
+            right: 80px;
+            height: 6px;
+            background-color: #555;
+            border-radius: 3px;
+        }
+        .slider-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 33.3%;
+            background-color: #4B3BC2;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        .slider-thumb {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 33.3%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: left 0.3s ease;
+            z-index: 2;
+            box-shadow: 0 5px 5px rgba(0,0,0,0.5);
+        }
+        
+        /* CARBON CYCLE ELEMENTS */
+        #carbon-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        #carbon-elements.active {
+            display: block;
+        }
+        .tree {
+            position: absolute;
+            bottom: 30%;
+        }
+        .tree-trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 40px;
+            background-color: #8B4513;
+        }
+        .tree-top {
+            position: absolute;
+            bottom: 38px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 60px;
+            background-color: #228B22;
+            border-radius: 50% 50% 5% 5%;
+        }
+        .carbon-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #333;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(10px, -15px); }
+            50% { transform: translate(20px, 0); }
+            75% { transform: translate(10px, 15px); }
+            100% { transform: translate(0, 0); }
+        }
+        
+        /* WATER CYCLE ELEMENTS */
+        #water-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        #water-elements.active {
+            display: block;
+        }
+        .cloud {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+        }
+        .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background-color: #4169E1;
+            border-radius: 0 0 50% 50%;
+        }
+        .water-surface {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #4682B4;
+        }
+        @keyframes falling {
+            0% { transform: translateY(0); opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
+        }
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes cloudDrift {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(30px); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* BIODIVERSITY ELEMENTS */
+        #biodiversity-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        #biodiversity-elements.active {
+            display: block;
+        }
+        .grass {
+            position: absolute;
+            bottom: 30%;
+            width: 100%;
+            height: 10px;
+            background-color: #32CD32;
+        }
+        .plant {
+            position: absolute;
+            bottom: 30%;
+        }
+        .plant-stem {
+            width: 2px;
+            height: 20px;
+            background-color: green;
+            position: relative;
+        }
+        .flower {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            top: -10px;
+            left: -4px;
+        }
+        .animal {
+            position: absolute;
+            width: 15px;
+            height: 8px;
+            background-color: #8B4513;
+            border-radius: 40% 40% 40% 40%;
+        }
+        @keyframes move {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(100px); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* Education Level Indicator Styles */
+        .education-level {
+            margin: 0 0 25px 0;
+            padding: 12px;
+            background-color: rgba(75, 59, 194, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .level-icon-container {
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .school-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #4B3BC2;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(75, 59, 194, 0.3);
+        }
+        
+        .level-details {
+            flex: 1;
+        }
+        
+        .level-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .level-description {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.4;
+			text-align: justify;
+        }
+        
+        .level-bar {
+            display: flex;
+            margin-top: 10px;
+            background-color: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .level-segment {
+            height: 100%;
+            flex: 1;
+            margin-right: 2px;
+        }
+        
+        .level-segment:last-child {
+            margin-right: 0;
+        }
+        
+        .level-active {
+            background-color: #4B3BC2;
+        }
+        
+        .level-inactive {
+            background-color: rgba(75, 59, 194, 0.2);
+        }
+        
+        /* Learning Outcomes Styles */
+        .learning-outcomes {
+            margin-bottom: 25px;
+        }
+        
+        .outcomes-title {
+            color: #4B3BC2;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .outcomes-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            max-width: 100%;
+        }
+        
+        .outcome-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            white-space: nowrap;
+        }
+        
+        .outcome-icon {
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+        
+        .outcome-text {
+            font-size: 16px;
+            color: #444;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+        }
+        
+        /* AR-Enhanced Learning Cards - NEW */
+        .ar-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .benefit-card {
+            display: flex;
+            align-items: flex-start;
+            background-color: rgba(75, 59, 194, 0.05);
+            border-left: 4px solid #4B3BC2;
+            border-radius: 0 8px 8px 0;
+            padding: 8px 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(75, 59, 194, 0.15);
+        }
+        
+        .benefit-icon {
+            flex-shrink: 0;
+            margin-right: 12px;
+            transform: translateY(2px);
+        }
+        
+        .benefit-text {
+            font-size: 16px;
+            line-height: 1.3;
+            color: #333;
+            text-align: justify;
+        }
+        
+        /* Progressive reveal styling */
+        .reveal-element {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+            pointer-events: none;
+        }
+        
+        .reveal-element.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Case Study: Environmental Education</h1>
+        <h2>Environmental Science</h2>
+        
+        <div class="content-container">
+            <div class="left-content">
+<div class="education-level reveal-element" id="education-level">
+    <div class="level-icon-container">
+        <div class="school-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                <path d="M2 7l10-5 10 5v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7z"></path>
+                <path d="M12 22V7"></path>
+                <path d="M12 7H4"></path>
+                <path d="M12 7h8"></path>
+                <path d="M7 12h1v5h-1z"></path>
+                <path d="M16 12h1v5h-1z"></path>
+            </svg>
+        </div>
+    </div>
+    <div class="level-details">
+        <div class="level-title">Primary School Level</div>
+        <div class="level-bar">
+            <div class="level-segment level-active" title="Primary School"></div>
+            <div class="level-segment level-inactive" title="Secondary School"></div>
+            <div class="level-segment level-inactive" title="University"></div>
+        </div>
+    </div>
+</div>
+                <div class="learning-outcomes reveal-element" id="learning-outcomes">
+                    <div class="section-title">Learning Objectives</div>
+                    <div class="outcomes-grid">
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Identify basic components of ecosystems</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Explain simple environmental cycles</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Recognise how living things interact</div>
+                        </div>
+                        <div class="outcome-item">
+                            <div class="outcome-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                            </div>
+                            <div class="outcome-text">Develop environmental awareness</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-element" id="case-study">
+                    <div class="section-title">AR (Mobility & Exploration)</div>
+                    
+                    <div class="ar-benefits">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="benefit-text">Makes invisible ecological processes observable</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <path d="M3.27 6.96 12 12.01l8.73-5.05"></path>
+                                    <path d="M12 22.08V12"></path>
+                                </svg>
+                            </div>
+                            <div class="benefit-text">Links theory to real-world examples</div>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+  <path d="M12 2v4"></path>
+  <path d="M12 18v4"></path>
+  <path d="M4.93 4.93l2.83 2.83"></path>
+  <path d="M16.24 16.24l2.83 2.83"></path>
+  <path d="M2 12h4"></path>
+  <path d="M18 12h4"></path>
+  <path d="M4.93 19.07l2.83-2.83"></path>
+  <path d="M16.24 7.76l2.83-2.83"></path>
+</svg>
+                            </div>
+                            <div class="benefit-text">Promotes active learning through inquiry</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal-element" id="key-features">
+                    <div class="section-title">Key Features</div>
+                    
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Card-triggered visualisations that students control themselves
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Multi-layered representation of interconnected environmental systems
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <div class="feature-text">
+                                Animated elements that demonstrate dynamic ecosystem interactions
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="right-content">
+                <div class="visualization reveal-element" id="visualization" style="margin-top: 70px;">
+                    <div class="viz-header">
+                        <div class="viz-title">AR Ecosystem Visualisation</div>
+                        <div class="viz-dropdown">
+                            <button class="dropdown-button" id="current-view">View Options</button>
+                            <div class="dropdown-content" id="dropdown-menu">
+                                <a class="dropdown-item" onclick="switchView('carbon')">Carbon Cycle</a>
+                                <a class="dropdown-item" onclick="switchView('water')">Water Cycle</a>
+                                <a class="dropdown-item" onclick="switchView('biodiversity')">Biodiversity</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ecosystem-container">
+                        <div class="sky"></div>
+                        <div class="sun"></div>
+                        <div class="landscape"></div>
+                        <div class="data-badge" id="data-badge">Carbon Cycle</div>
+                        <div id="carbon-elements" class="active">
+                            <div class="tree" style="left: 20%;">
+                                <div class="tree-trunk"></div>
+                                <div class="tree-top"></div>
+                            </div>
+                            <div class="tree" style="left: 50%;">
+                                <div class="tree-trunk"></div>
+                                <div class="tree-top"></div>
+                            </div>
+                            <div class="tree" style="left: 80%;">
+                                <div class="tree-trunk"></div>
+                                <div class="tree-top"></div>
+                            </div>
+                            <div class="carbon-particle" style="top: 30%; left: 25%; animation: float 8s infinite alternate;"></div>
+                            <div class="carbon-particle" style="top: 40%; left: 45%; animation: float 6s infinite alternate-reverse;"></div>
+                            <div class="carbon-particle" style="top: 20%; left: 65%; animation: float 9s infinite alternate;"></div>
+                            <div class="carbon-particle" style="top: 50%; left: 85%; animation: float 7s infinite alternate-reverse;"></div>
+                            <div class="ar-card">
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#4B3BC2" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <path d="M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/>
+                                        <path d="M2 12h20"/>
+                                    </svg>
+                                </div>
+                                <span style="font-size: 8px; text-align: center; color: #333;">Carbon Cycle</span>
+                                <div class="scan-effect"></div>
+                            </div>
+                        </div>
+                        <div id="water-elements">
+                            <div class="cloud" style="top: 15%; left: 20%; width: 80px; height: 40px; animation: cloudDrift 15s ease-in-out infinite;"></div>
+                            <div class="cloud" style="top: 10%; left: 60%; width: 100px; height: 50px; animation: cloudDrift 20s ease-in-out infinite reverse;"></div>
+                            <div class="raindrop" style="top: 30%; left: 25%; animation: falling 2s linear infinite;"></div>
+                            <div class="raindrop" style="top: 25%; left: 30%; animation: falling 2.2s linear infinite 0.3s;"></div>
+                            <div class="raindrop" style="top: 28%; left: 35%; animation: falling 1.8s linear infinite 0.5s;"></div>
+                            <div class="raindrop" style="top: 22%; left: 65%; animation: falling 2.4s linear infinite 0.1s;"></div>
+                            <div class="raindrop" style="top: 27%; left: 70%; animation: falling 2s linear infinite 0.7s;"></div>
+                            <div class="raindrop" style="top: 24%; left: 75%; animation: falling 1.9s linear infinite 0.2s;"></div>
+                            <div class="water-surface" style="animation: wave 3s ease-in-out infinite;"></div>
+                            <div class="ar-card">
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#4682B4" stroke-width="2">
+                                        <path d="M12 2a10 10 0 0 0-10 10a10 10 0 0 0 10 10a10 10 0 0 0 10-10a10 10 0 0 0-10-10z"/>
+                                        <path d="M5 12h1m1-5 1 1m4-4v1m7 3h-1m-1-5-1 1M8 16l4 4 4-4M12 12v8"/>
+                                    </svg>
+                                </div>
+                                <span style="font-size: 8px; text-align: center; color: #333;">Water Cycle</span>
+                                <div class="scan-effect"></div>
+                            </div>
+                        </div>
+                        <div id="biodiversity-elements">
+                            <div class="grass"></div>
+                            
+                            <div class="plant" style="left: 10%;">
+                                <div class="plant-stem"></div>
+                                <div class="flower" style="background-color: red;"></div>
+                            </div>
+                            <div class="plant" style="left: 25%;">
+                                <div class="plant-stem" style="height: 15px;"></div>
+                                <div class="flower" style="background-color: yellow; top: -8px;"></div>
+                            </div>
+                            <div class="plant" style="left: 40%;">
+                                <div class="plant-stem" style="height: 18px;"></div>
+                                <div class="flower" style="background-color: purple; top: -9px;"></div>
+                            </div>
+                            <div class="plant" style="left: 60%;">
+                                <div class="plant-stem" style="height: 16px;"></div>
+                                <div class="flower" style="background-color: white; top: -8px;"></div>
+                            </div>
+                            <div class="plant" style="left: 75%;">
+                                <div class="plant-stem" style="height: 22px;"></div>
+                                <div class="flower" style="background-color: orange; top: -12px;"></div>
+                            </div>
+                            <div class="plant" style="left: 90%;">
+                                <div class="plant-stem" style="height: 14px;"></div>
+                                <div class="flower" style="background-color: pink; top: -7px;"></div>
+                            </div>
+                            <div class="animal" style="bottom: 35%; left: 15%; animation: move 15s linear infinite;"></div>
+                            <div class="animal" style="bottom: 40%; left: 45%; animation: move 20s linear infinite reverse;"></div>
+                            <div class="animal" style="bottom: 37%; left: 70%; animation: move 18s linear infinite;"></div>
+                            <div class="ar-card">
+                                <div class="card-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#32CD32" stroke-width="2">
+                                        <path d="M21 11c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/>
+                                        <path d="M12 7v8M8 11h8"/>
+                                    </svg>
+                                </div>
+                                <span style="font-size: 8px; text-align: center; color: #333;">Biodiversity</span>
+                                <div class="scan-effect"></div>
+                            </div>
+                        </div>
+                        <div class="ar-phone">
+                            <div class="phone-screen">
+                                <div class="ar-beam"></div>
+                            </div>
+                        </div>
+                        <div class="time-slider">
+                            <div class="slider-label">Past</div>
+                            <div class="slider-label">Present</div>
+                            <div class="slider-label">Future</div>
+                            <div class="slider-track">
+                                <div class="slider-progress" id="timeline-progress"></div>
+                                <div class="slider-thumb" id="timeline-thumb"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script>
+    let dropdownVisible = false;
+    let currentStep = 0;
+    let hasEnteredSlide = false;
+
+    const educationLevel = document.getElementById('education-level');
+    const learningOutcomes = document.getElementById('learning-outcomes');
+    const caseStudy = document.getElementById('case-study');
+    const keyFeatures = document.getElementById('key-features');
+    const visualization = document.getElementById('visualization');
+    const revealElements = [
+        educationLevel,
+        learningOutcomes,
+        caseStudy,
+        [keyFeatures, visualization]
+    ];
+	
+    function handleKeyDown(event) {
+        if (event.key === 'ArrowRight') {
+            if (!hasEnteredSlide) return;
+            
+            if (currentStep < revealElements.length) {
+                let currentElements = revealElements[currentStep];
+                if (Array.isArray(currentElements)) {
+                    currentElements.forEach(element => {
+                        element.classList.add('visible');
+                    });
+                } else {
+                    currentElements.classList.add('visible');
+                }
+                
+                currentStep++;
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage('stepHandled', '*');
+                }
+                
+                event.stopPropagation();
+            }
+        }
+    }
+	
+    function showAllContent() {
+        revealElements.forEach(element => {
+            if (Array.isArray(element)) {
+                element.forEach(el => el.classList.add('visible'));
+            } else {
+                element.classList.add('visible');
+            }
+        });
+        currentStep = revealElements.length;
+    }
+
+    function initializeSlide() {
+        if (!hasEnteredSlide) {
+            hasEnteredSlide = true;
+            currentStep = 0;
+            revealElements.forEach(element => {
+                if (Array.isArray(element)) {
+                    element.forEach(el => el.classList.remove('visible'));
+                } else {
+                    element.classList.remove('visible');
+                }
+            });
+			
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'supportsSteps',
+                    steps: revealElements.length + 1
+                }, '*');
+            }
+            
+            console.log("Slide initialized for progressive reveal with combined elements");
+            initVisualization();
+        }
+    }
+
+    function initVisualization() {
+        const thumb = document.getElementById('timeline-thumb');
+        const progress = document.getElementById('timeline-progress');
+        const track = document.querySelector('.slider-track');
+        const dropdownBtn = document.getElementById('current-view');
+        const dropdownContent = document.getElementById('dropdown-menu');
+        dropdownBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (dropdownVisible) {
+                dropdownContent.style.display = 'none';
+            } else {
+                dropdownContent.style.display = 'block';
+            }
+            dropdownVisible = !dropdownVisible;
+        });
+        document.addEventListener('click', function() {
+            dropdownContent.style.display = 'none';
+            dropdownVisible = false;
+        });
+        dropdownContent.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        let isDragging = false;
+        thumb.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            document.addEventListener('mousemove', moveSlider);
+            document.addEventListener('mouseup', stopDragging);
+            e.preventDefault();
+        });
+        
+        track.addEventListener('click', function(e) {
+            updateSliderPosition(e);
+        });
+        
+        function moveSlider(e) {
+            if (isDragging) {
+                updateSliderPosition(e);
+            }
+        }
+        
+        function stopDragging() {
+            isDragging = false;
+            document.removeEventListener('mousemove', moveSlider);
+            document.removeEventListener('mouseup', stopDragging);
+        }
+        
+        function updateSliderPosition(e) {
+            const rect = track.getBoundingClientRect();
+            let position = (e.clientX - rect.left) / rect.width;
+            position = Math.max(0, Math.min(1, position));
+            
+            const percentage = position * 100;
+            thumb.style.left = percentage + '%';
+            progress.style.width = percentage + '%';
+        }
+    }
+	
+    function switchView(viewType) {
+        document.getElementById('carbon-elements').classList.remove('active');
+        document.getElementById('water-elements').classList.remove('active');
+        document.getElementById('biodiversity-elements').classList.remove('active');
+        document.getElementById(viewType + '-elements').classList.add('active');
+
+        const badge = document.getElementById('data-badge');
+        if (viewType === 'carbon') {
+            badge.textContent = 'Carbon Cycle';
+        } else if (viewType === 'water') {
+            badge.textContent = 'Water Cycle';
+        } else if (viewType === 'biodiversity') {
+            badge.textContent = 'Biodiversity';
+        }
+
+        const dropdownContent = document.getElementById('dropdown-menu');
+        dropdownContent.style.display = 'none';
+        dropdownVisible = false;
+    }
+
+    window.addEventListener('message', function(event) {
+        const message = event.data;
+        
+        if (message === 'slideActive') {
+            initializeSlide();
+        }
+        else if (message === 'showAll') {
+            showAllContent();
+        }
+        else if (message === 'next') {
+            handleKeyDown({ 
+                key: 'ArrowRight', 
+                stopPropagation: function(){} 
+            });
+        }
+    });
+    document.addEventListener('keydown', handleKeyDown);
+    window.onload = function() {
+        if (window === window.parent || document.visibilityState === 'visible') {
+            initializeSlide();
+        }
+    };
+</script>
+</body>
+</html>

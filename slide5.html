@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benefits of Immersive Technologies in Education</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+        h1 {
+            color: #4B3BC2;
+            font-size: 42px;
+            margin-top: 5px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        /* Benefits grid layout */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin: 60px auto 0; /* Increased top margin to move boxes down */
+            max-width: 1000px;
+        }
+        .benefit-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .benefit-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .benefit-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        .benefit-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            font-size: 24px;
+        }
+        .benefit-description ul {
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        .benefit-description li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 19px;
+        }
+        
+        .benefit-description li::before {
+            content: "•";
+            color: #4B3BC2;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            width: 25px;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: #4B3BC2;
+        }
+        
+        /* Progressive reveal styling */
+        .reveal-element {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+            pointer-events: none;
+        }
+        
+        .reveal-element.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Immersive Technologies in Education: Benefits</h1>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card reveal-element" id="engagement">
+                <div class="benefit-header">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="35" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M32 50 L45 65 L70 35" stroke="#4B3BC2" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Enhanced Engagement</div>
+                </div>
+                <div class="benefit-description">
+                    <ul>
+                        <li>Increases <span class="highlight">intrinsic motivation</span></li>
+                        <li>Extends <span class="highlight">attention span</span></li>
+                        <li>Creates <span class="highlight">emotional investment</span></li>
+                        <li>Promotes <span class="highlight">active participation</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="benefit-card reveal-element" id="authentic">
+                <div class="benefit-header">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 70 L50 30 L70 70" stroke="#4B3BC2" stroke-width="3" fill="none"/>
+                            <path d="M35 60 L65 60" stroke="#4B3BC2" stroke-width="3" fill="none"/>
+                            <circle cx="50" cy="30" r="8" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="35" cy="60" r="5" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="65" cy="60" r="5" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Authentic Learning</div>
+                </div>
+                <div class="benefit-description">
+                    <ul>
+                        <li>Transforms <span class="highlight">abstract concepts</span></li>
+                        <li>Promotes <span class="highlight">experiential knowledge</span></li>
+                        <li>Enables <span class="highlight">iterative practice & refinement</span></li>
+                        <li>Builds <span class="highlight">procedural memory</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="benefit-card reveal-element" id="social">
+                <div class="benefit-header">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="40" r="20" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M50 60 L50 80" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M40 70 L60 70" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M35 50 L25 60 M65 50 L75 60" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="25" cy="65" r="5" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="75" cy="65" r="5" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Social Aspect</div>
+                </div>
+                <div class="benefit-description">
+                    <ul>
+                        <li>Fosters <span class="highlight">global collaboration</span></li>
+                        <li>Facilitates <span class="highlight">role-based</span> learning</li>
+                        <li>Enables <span class="highlight">collaborative problem-solving</span></li>
+                        <li>Creates <span class="highlight">shared understanding</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="benefit-card reveal-element" id="resource">
+                <div class="benefit-header">
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 30 L70 30 L70 70 L30 70 Z" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M40 40 L60 40 L60 60 L40 60 Z" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="5" fill="#4B3BC2"/>
+                            <path d="M20 50 L30 50 M70 50 L80 50" stroke="#4B3BC2" stroke-width="2" stroke-dasharray="2,2"/>
+                        </svg>
+                    </div>
+                    <div class="benefit-title">Resource Optimisation</div>
+                </div>
+                <div class="benefit-description">
+                    <ul>
+                        <li>Creates <span class="highlight">scalable environments</span></li>
+                        <li>Provides access to <span class="highlight">expensive equipment</span></li>
+                        <li>Enables reuse of <span class="highlight">resources</span></li>
+                        <li>Promotes <span class="highlight">sustainable</span> practices</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let hasEnteredSlide = false;
+        const elements = [
+            document.getElementById('engagement'),
+            document.getElementById('authentic'),
+            document.getElementById('social'),
+            document.getElementById('resource'),
+        ];
+        function handleKeyPress(event) {
+            if (event.key === 'ArrowRight') {
+                if (!hasEnteredSlide) return;
+                
+                if (currentStep < elements.length) {
+                    elements[currentStep].classList.add('visible');
+                    currentStep++;
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage('stepHandled', '*');
+                    }
+                    
+                    event.stopPropagation();
+                    return;
+                }
+            }
+        }
+        function showAllContent() {
+            elements.forEach(element => {
+                element.classList.add('visible');
+            });
+            currentStep = elements.length;
+        }
+        function initializeSlide() {
+            if (!hasEnteredSlide) {
+                hasEnteredSlide = true;
+                currentStep = 0;
+                elements.forEach(element => {
+                    element.classList.remove('visible');
+                });
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'supportsSteps',
+                        steps: elements.length + 1
+                    }, '*');
+                }
+                
+                console.log("Slide 5 initialized and ready for progressive reveal");
+            }
+        }
+        window.addEventListener('message', function(event) {
+            const message = event.data;
+            
+            if (message === 'slideActive') {
+                initializeSlide();
+            }
+            else if (message === 'showAll') {
+                showAllContent();
+            }
+            else if (message === 'next') {
+                handleKeyPress({ key: 'ArrowRight', stopPropagation: function(){} });
+            }
+        });
+        document.addEventListener('keydown', handleKeyPress);
+        window.onload = function() {
+            if (window === window.parent || document.visibilityState === 'visible') {
+                initializeSlide();
+            }
+        };
+    </script>
+</body>
+</html>

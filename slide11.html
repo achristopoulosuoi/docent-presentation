@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Technologies in Education: Evaluation Methods</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #4B3BC2;
+            color: white;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            text-align: center;
+        }
+        .section-title {
+            font-size: 70px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeUp 1.5s ease forwards;
+        }
+        .divider {
+            width: 100px;
+            height: 6px;
+            background-color: white;
+            margin: 20px auto;
+            opacity: 0;
+            animation: expandWidth 1.5s ease forwards 0.5s;
+        }
+        .section-subtitle {
+            font-size: 30px;
+            font-weight: 300;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeUp 1.5s ease forwards 1s;
+        }
+        .evaluation-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            gap: 40px;
+        }
+        .evaluation-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            animation: fadeUp 1.5s ease forwards;
+        }
+        .evaluation-indicator:nth-child(1) {
+            animation-delay: 1.3s;
+        }
+        .evaluation-indicator:nth-child(2) {
+            animation-delay: 1.6s;
+        }
+        .evaluation-indicator:nth-child(3) {
+            animation-delay: 1.9s;
+        }
+        .indicator-icon {
+            width: 70px;
+            height: 70px;
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .indicator-label {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 160px;
+        }
+        .background-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 50%);
+            z-index: -1;
+        }
+        .icon-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .floating-icon {
+            position: absolute;
+            opacity: 0.05;
+            animation: float 15s linear infinite;
+        }
+        .icon-1 {
+            top: 15%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .icon-2 {
+            top: 70%;
+            left: 20%;
+            animation-delay: 3s;
+        }
+        .icon-3 {
+            top: 25%;
+            right: 15%;
+            animation-delay: 6s;
+        }
+        .icon-4 {
+            bottom: 20%;
+            right: 25%;
+            animation-delay: 9s;
+        }
+        .icon-5 {
+            bottom: 35%;
+            left: 35%;
+            animation-delay: 5s;
+            transform: scale(0.8);
+        }
+		
+        .research-ribbon {
+            position: relative;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            color: #4B3BC2;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 6px 30px;
+            margin-top: 80px;
+            border-radius: 3px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            animation: fadeUp 1.5s ease forwards 2.2s, glowPulse 3s ease-in-out infinite 2.5s;
+        }
+        
+        .research-ribbon::before, .research-ribbon::after {
+            content: "✦";
+            padding: 0 10px;
+        }
+        
+        @keyframes glowPulse {
+            0% { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); transform: scale(1); }
+            50% { box-shadow: 0 2px 20px rgba(75, 59, 194, 0.6); transform: scale(1.03); }
+            100% { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); transform: scale(1); }
+        }
+        
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes expandWidth {
+            0% {
+                opacity: 0;
+                width: 0;
+            }
+            100% {
+                opacity: 1;
+                width: 100px;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, 20px) rotate(90deg);
+            }
+            50% {
+                transform: translate(100px, 0) rotate(180deg);
+            }
+            75% {
+                transform: translate(50px, -20px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="background-pattern"></div>
+        <div class="icon-container">
+            <svg class="floating-icon icon-1" width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="15" y="35" width="70" height="30" rx="5" fill="#FFFFFF"/>
+                <circle cx="35" cy="50" r="8" fill="#4B3BC2"/>
+                <circle cx="65" cy="50" r="8" fill="#4B3BC2"/>
+            </svg>
+            <svg class="floating-icon icon-2" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="20" y="25" width="60" height="50" rx="5" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="5,5"/>
+                <circle cx="40" cy="40" r="10" fill="#FFFFFF"/>
+                <rect x="55" y="55" width="15" height="15" fill="#FFFFFF"/>
+            </svg>
+            <svg class="floating-icon icon-3" width="130" height="130" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 50 C 20 70, 80 70, 80 50" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+                <rect x="35" y="30" width="30" height="20" rx="5" fill="#FFFFFF"/>
+                <circle cx="35" cy="65" r="8" fill="#FFFFFF"/>
+                <circle cx="65" cy="65" r="8" fill="#FFFFFF"/>
+            </svg>
+            <svg class="floating-icon icon-4" width="110" height="110" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="25" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+                <path d="M35 50 L65 50 M50 35 L50 65" stroke="#FFFFFF" stroke-width="3"/>
+            </svg>
+            <svg class="floating-icon icon-5" width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="20" width="50" height="60" fill="#FFFFFF"/>
+                <rect x="30" y="30" width="40" height="5" fill="#4B3BC2" opacity="0.7"/>
+                <rect x="30" y="40" width="40" height="3" fill="#4B3BC2" opacity="0.5"/>
+                <rect x="30" y="45" width="40" height="3" fill="#4B3BC2" opacity="0.5"/>
+                <rect x="30" y="50" width="40" height="3" fill="#4B3BC2" opacity="0.5"/>
+                <rect x="30" y="55" width="40" height="3" fill="#4B3BC2" opacity="0.5"/>
+                <rect x="30" y="60" width="40" height="3" fill="#4B3BC2" opacity="0.5"/>
+                <rect x="30" y="65" width="25" height="3" fill="#4B3BC2" opacity="0.5"/>
+            </svg>
+        </div>
+        <div class="section-title">Immersive Technologies in Education</div>
+        <div class="divider"></div>
+        <div class="section-subtitle">Evaluation Methods</div>
+        <div class="evaluation-indicators">
+            <div class="evaluation-indicator">
+                <div class="indicator-icon">
+                    <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="25" stroke="#FFFFFF" stroke-width="3.5" fill="none"/>
+                        <line x1="50" y1="15" x2="50" y2="30" stroke="#FFFFFF" stroke-width="3.5"/>
+                        <line x1="50" y1="70" x2="50" y2="85" stroke="#FFFFFF" stroke-width="3.5"/>
+                        <line x1="15" y1="50" x2="30" y2="50" stroke="#FFFFFF" stroke-width="3.5"/>
+                        <line x1="70" y1="50" x2="85" y2="50" stroke="#FFFFFF" stroke-width="3.5"/>
+                        <circle cx="50" cy="42" r="8" fill="#FFFFFF"/>
+                        <path d="M38 65 C 38 56, 50 52, 50 52 C 50 52, 62 56, 62 65" stroke="#FFFFFF" stroke-width="3.5" fill="none"/>
+                    </svg>
+                </div>
+                <div class="indicator-label">User Experience</div>
+            </div>
+            <div class="evaluation-indicator">
+                <div class="indicator-icon">
+                    <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 70 L35 50 L50 60 L65 30 L80 40" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <line x1="20" y1="80" x2="80" y2="80" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="20" y1="80" x2="20" y2="30" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="indicator-label">Pedagogy</div>
+            </div>
+            <div class="evaluation-indicator">
+                <div class="indicator-icon">
+                    <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="40" cy="40" r="20" stroke="#FFFFFF" stroke-width="4" fill="none"/>
+                        <line x1="55" y1="55" x2="75" y2="75" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+                        <circle cx="40" cy="35" r="5" fill="#FFFFFF"/>
+                        <path d="M30 50 C 30 45, 40 45, 40 45 C 40 45, 50 45, 50 50" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="indicator-label">Psychology</div>
+            </div>
+        </div>
+        
+        <div class="research-ribbon">COMMON PRACTICES</div>
+    </div>
+</body>
+</html>

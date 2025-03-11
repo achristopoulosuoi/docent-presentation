@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Technologies in Science Education</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            min-height: 600px;
+            max-height: 100vh;
+        }
+        .left-panel {
+            width: 40%;
+            background: linear-gradient(135deg, #4B3BC2 0%, #7B6FD8 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 3%;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            min-width: 300px;
+        }
+        .right-panel {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0 4%;
+            position: relative;
+            background-color: #f9f9f9;
+            overflow-y: auto;
+        }
+        .title {
+            color: white;
+            font-size: min(56px, 5vw);
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: min(40px, 5vh);
+            position: relative;
+            z-index: 2;
+            text-align: center; /* Added text-align center */
+        }
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: min(26px, 2.5vw);
+            margin-top: -20px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+        .top-content {
+            margin-top: 40px;
+        }
+        .presenter-info {
+            margin-top: 0;
+            margin-bottom: 35px; /* Consistent spacing */
+        }
+        .presenter-name {
+            font-size: min(42px, 4vw);
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 10px;
+        }
+        .presenter-title {
+            font-size: min(26px, 2.5vw);
+            font-style: italic;
+            color: #555;
+            margin-bottom: 0;
+        }
+        .event-info {
+            font-size: min(32px, 3vw);
+            color: #4B3BC2;
+            font-weight: bold;
+            margin-bottom: 35px; /* Consistent spacing */
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(75, 59, 194, 0.2);
+        }
+        .middle-content {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            position: relative;
+            margin-top: 35px; /* Consistent spacing */
+            margin-bottom: 65px;
+            background: rgba(75, 59, 194, 0.04);
+            border-top: 2px solid rgba(75, 59, 194, 0.1);
+            border-bottom: 2px solid rgba(75, 59, 194, 0.1);
+        }
+        .contact-item {
+            font-size: 18px; /* Normalized font size for all contact items */
+            color: #555;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        .contact-item svg {
+            margin-right: 10px;
+            width: 18px; /* Normalized icon size */
+            height: 18px; /* Normalized icon size */
+            flex-shrink: 0;
+        }
+        .email {
+            color: #4B3BC2;
+        }
+        .circle-decoration {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        .circle-1 {
+            width: 350px;
+            height: 350px;
+            top: -100px;
+            left: -100px;
+        }
+        .circle-2 {
+            width: 250px;
+            height: 250px;
+            bottom: 50px;
+            right: -50px;
+        }
+        .circle-3 {
+            width: 180px;
+            height: 180px;
+            top: 40%;
+            right: 30px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
+        .diagonal-line {
+            position: absolute;
+            width: 150%;
+            height: 5px;
+            background-color: rgba(255,255,255,0.2);
+            transform: rotate(45deg);
+            transform-origin: left;
+            left: 0;
+            top: 30%;
+            z-index: 1;
+        }
+        .tech-icon-row {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .tech-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite;
+        }
+        .tech-icon:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .tech-icon:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .tech-icon:nth-child(3) {
+            animation-delay: 1s;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        .tech-icon svg {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        .tech-label {
+            font-size: 16px;
+            color: white;
+            text-align: center;
+        }
+        .pattern-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            z-index: 1;
+        }
+        .right-pattern {
+            display: none;
+        }
+        .expertise-section {
+            margin-top: 0;
+            margin-bottom: 35px; /* Consistent spacing */
+        }
+        .expertise-title {
+            font-size: min(20px, 2vw);
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 15px;
+        }
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        @media (max-width: 1200px) {
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .expertise-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .expertise-icon {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .expertise-text {
+            font-size: 16px;
+            color: #333;
+        }
+        .university-affiliation {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 100px;
+            left: 50px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .university-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 50%;
+            background-color: #4B3BC2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .university-text {
+            font-size: 18px; /* Normalized font size */
+            color: #333;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 1100px) {
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            .university-text {
+                text-align: left;
+            }
+        }
+        .presentation-highlights {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .highlight-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            width: 28%;
+            text-align: center;
+        }
+        .highlight-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 5px;
+        }
+        .highlight-text {
+            font-size: 14px;
+            color: #555;
+        }
+        .objectives-section {
+            margin-top: 0;
+            margin-bottom: 35px; /* Consistent spacing */
+        }
+        .objectives-title {
+            font-size: min(20px, 2vw);
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 15px;
+        }
+        .objectives-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .objective-tag {
+            background-color: rgba(75, 59, 194, 0.07);
+            color: #4B3BC2;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: min(14px, 1.5vw);
+        }
+        
+        /* Add responsive layout for smaller screens */
+        @media (max-width: 1024px) {
+            .right-panel, .left-panel {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .title {
+                margin-bottom: 20px;
+            }
+            .presenter-title {
+                margin-bottom: 15px;
+            }
+            .expertise-section {
+                margin-bottom: 15px;
+            }
+            .event-info {
+                margin-bottom: 15px;
+            }
+            .contact-info {
+                margin-bottom: 10px;
+            }
+            .right-panel > * {
+                margin-top: 15px !important;
+                margin-bottom: 15px !important;
+            }
+        }
+        
+        /* Container for evenly distributing content */
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 40px 0; /* Equal padding at top and bottom */
+        }
+        
+        /* Create equal spacing between major sections */
+        .section-spacer {
+            height: 35px; /* Consistent spacing between all sections */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="pattern-overlay"></div>
+            <div class="circle-decoration circle-1"></div>
+            <div class="circle-decoration circle-2"></div>
+            <div class="circle-decoration circle-3"></div>
+            <div class="diagonal-line"></div>
+            
+            <div class="title fade-in">
+                Immersive Technologies in Science Education
+            </div>
+            
+            <div class="subtitle fade-in delay-1">
+            </div>
+            
+            <div class="tech-icon-row fade-in delay-2">
+                <div class="tech-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="15" y="35" width="70" height="30" rx="5" fill="#FFFFFF"/>
+                        <circle cx="35" cy="50" r="8" fill="#4B3BC2"/>
+                        <circle cx="65" cy="50" r="8" fill="#4B3BC2"/>
+                    </svg>
+                    <div class="tech-label">VR</div>
+                </div>
+                <div class="tech-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="25" width="60" height="50" rx="5" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="5,5"/>
+                        <circle cx="40" cy="40" r="10" fill="#FFFFFF"/>
+                        <rect x="55" y="55" width="15" height="15" fill="#FFFFFF"/>
+                    </svg>
+                    <div class="tech-label">AR</div>
+                </div>
+                <div class="tech-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 50 C 20 70, 80 70, 80 50" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+                        <rect x="35" y="30" width="30" height="20" rx="5" fill="#FFFFFF"/>
+                        <circle cx="35" cy="65" r="8" fill="#FFFFFF"/>
+                        <circle cx="65" cy="65" r="8" fill="#FFFFFF"/>
+                    </svg>
+                    <div class="tech-label">XR</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <div class="content-container">
+                <div class="right-pattern"></div>
+                <div class="presenter-info fade-in delay-1">
+                    <div class="presenter-name">Athanasios Christopoulos</div>
+                    <div class="presenter-title">Ph.D. Virtual Reality Engineering</div>
+                </div>
+                
+                <div class="section-spacer"></div>
+                <div class="expertise-section fade-in delay-2">
+                    <div class="expertise-title">Areas of Expertise</div>
+                    <div class="expertise-grid">
+                        <div class="expertise-item">
+                            <div class="expertise-icon">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="11" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                                    <path d="M8 12 L11 15 L16 9" stroke="#4B3BC2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="expertise-text">Extended Reality</div>
+                        </div>
+                        <div class="expertise-item">
+                            <div class="expertise-icon">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="11" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                                    <path d="M8 12 L11 15 L16 9" stroke="#4B3BC2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="expertise-text">Educational Technology</div>
+                        </div>
+                        <div class="expertise-item">
+                            <div class="expertise-icon">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="11" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                                    <path d="M8 12 L11 15 L16 9" stroke="#4B3BC2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="expertise-text">Gamification</div>
+                        </div>
+                        <div class="expertise-item">
+                            <div class="expertise-icon">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="11" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                                    <path d="M8 12 L11 15 L16 9" stroke="#4B3BC2" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="expertise-text">Learning Analytics</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-spacer"></div>
+                <div class="event-info fade-in delay-3">
+                    Demonstration Lecture
+                </div>
+                
+                <div class="section-spacer"></div>
+                <div class="objectives-section fade-in delay-4">
+                    <div class="objectives-title">Topics</div>
+                    <div class="objectives-list">
+                        <div class="objective-tag">Definitions</div>
+                        <div class="objective-tag">Potential & Challenges</div>
+                        <div class="objective-tag">Case Studies</div>
+                        <div class="objective-tag">Evaluation Methods</div>
+                        <div class="objective-tag">The Future</div>
+                    </div>
+                </div>
+                
+                <div class="section-spacer"></div>
+                <div class="contact-info fade-in delay-5">
+                    <div class="contact-item">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                            <rect x="2" y="4" width="20" height="18" rx="2" fill="none" stroke="#555" stroke-width="2"/>
+                            <line x1="2" y1="10" x2="22" y2="10" stroke="#555" stroke-width="2"/>
+                            <line x1="7" y1="2" x2="7" y2="6" stroke="#555" stroke-width="2"/>
+                            <line x1="17" y1="2" x2="17" y2="6" stroke="#555" stroke-width="2"/>
+                            <text x="12" y="19" text-anchor="middle" font-size="9" fill="#555" font-weight="bold">11</text>
+                        </svg>
+                        11-March-2025
+                    </div>
+                    
+                    <div class="contact-item university-text">Faculty of Science, University of Turku</div>
+                    
+                    <div class="contact-item email">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                            <rect x="2" y="4" width="20" height="16" rx="2" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M2 7 L12 15 L22 7" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                        </svg>
+                        atchri@utu.fi
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

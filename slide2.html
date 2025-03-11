@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparing Reality Technologies</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 25px;
+            background-color: white;
+            color: #333;
+        }
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4B3BC2;
+            font-size: 34px; /* Increased from 32px */
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: #4B3BC2;
+            font-size: 24px; /* Increased from 22px */
+            margin-top: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .comparison-grid {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            /* Added for progressive reveal */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+        }
+        /* Class to show the comparison grid */
+        .comparison-grid.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .technology-card {
+            flex: 1;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .technology-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .tech-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            font-size: 24px; /* Increased from 20px */
+            margin-bottom: 20px; /* Increased from 15px */
+            text-align: center;
+        }
+        .tech-icon {
+            text-align: center;
+            margin-bottom: 25px; /* Increased from 15px */
+            height: 85px; /* Increased from 75px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tech-icon svg {
+            height: 85px; /* Increased from 75px */
+            width: auto;
+        }
+        .feature-title {
+            font-weight: bold;
+            margin-top: 20px; /* Increased from 15px */
+            margin-bottom: 10px; /* Increased from 6px */
+            color: #4B3BC2;
+            font-size: 18px; /* Increased from 16px */
+        }
+        .feature-description {
+            font-size: 16px; /* Increased from 14px */
+            line-height: 1.6; /* Increased from 1.5 */
+            margin-bottom: 18px; /* Increased from 12px */
+            text-align: justify; /* Added full justification */
+        }
+        .spectrum-container {
+            padding: 20px;
+            margin-top: 30px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+            /* Added for progressive reveal */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, visibility 0.5s ease;
+        }
+        /* Class to show the spectrum container */
+        .spectrum-container.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .reality-continuum {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            position: relative;
+            height: 200px; /* Increased from 190px */
+        }
+        .reality-option {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            padding: 15px 8px;
+            transition: transform 0.3s ease;
+        }
+        .reality-option:hover {
+            transform: translateY(-5px);
+            z-index: 2;
+        }
+        .option-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 10px;
+            font-size: 18px; /* Increased from 16px */
+        }
+        .option-icon {
+            height: 85px; /* Increased from 75px */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .option-icon svg {
+            height: 70px; /* Increased from 60px */
+            width: auto;
+        }
+        .continuum-line {
+            position: absolute;
+            height: 5px;
+            background: linear-gradient(to right, #4B3BC2, #8078D8, #B5AEED);
+            bottom: 20px;
+            left: 5%;
+            right: 5%;
+            z-index: 1;
+        }
+        .moving-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: white;
+            border: 3px solid #4B3BC2;
+            border-radius: 50%;
+            bottom: 16px;
+            left: 5%;
+            z-index: 2;
+            animation: move-across 20s infinite ease-in-out;
+            cursor: pointer;
+        }
+        .reality-continuum:hover .moving-dot {
+            animation-play-state: paused;
+        }
+        @keyframes move-across {
+            0% { left: 12.5%; }
+            20% { left: 12.5%; }
+            25% { left: 37.5%; }
+            45% { left: 37.5%; }
+            50% { left: 62.5%; }
+            70% { left: 62.5%; }
+            75% { left: 87.5%; }
+            95% { left: 87.5%; }
+            100% { left: 12.5%; }
+        }
+        @media (max-width: 900px) {
+            .comparison-grid {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Extended Reality Technologies</h1>
+        
+        <div class="comparison-grid" id="tech-cards">
+            <div class="technology-card">
+                <div class="tech-title">Augmented Reality (AR)</div>
+                <div class="tech-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 30 L80 30 L80 70 L20 70 Z" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-dasharray="5,5"/>
+                        <circle cx="40" cy="50" r="10" fill="#B5AEED" opacity="0.8"/>
+                        <rect x="55" y="40" width="20" height="20" fill="#4B3BC2" opacity="0.8"/>
+                        <path d="M30 80 L30 85 L70 85 L70 80" stroke="#4B3BC2" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                
+                <div class="feature-title">Definition</div>
+                <div class="feature-description">Digital elements overlaid into the real world</div>
+                
+                <div class="feature-title">Devices</div>
+                <div class="feature-description">Smartphones, Tablets, AR Glasses, Smart Contact Lenses</div>
+            </div>
+            
+            <div class="technology-card">
+                <div class="tech-title">Mixed Reality (MR)</div>
+                <div class="tech-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="15" y="35" width="70" height="30" rx="5" fill="#4B3BC2" opacity="0.6"/>
+                        <circle cx="35" cy="50" r="10" fill="#B5AEED" opacity="0.8"/>
+                        <rect x="55" y="40" width="15" height="15" fill="#B5AEED" opacity="0.8"/>
+                        <path d="M30 65 L35 75 L65 75 L70 65" stroke="#4B3BC2" stroke-width="2" fill="none"/>
+                        <path d="M40 30 C 45 20, 55 20, 60 30" stroke="#4B3BC2" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                
+                <div class="feature-title">Definition</div>
+                <div class="feature-description">Virtual objects anchored to the real world</div>
+                
+                <div class="feature-title">Devices</div>
+                <div class="feature-description">HoloLens, Magic Leap, Apple Vision Pro</div>
+            </div>
+            
+            <div class="technology-card">
+                <div class="tech-title">Virtual Reality (VR)</div>
+                <div class="tech-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="30" width="80" height="40" rx="5" fill="#4B3BC2" opacity="0.8"/>
+                        <rect x="20" y="35" width="60" height="30" rx="3" fill="#B5AEED"/>
+                        <rect x="30" y="40" width="40" height="20" rx="2" fill="#FFFFFF"/>
+                        <path d="M30 65 L40 80 L60 80 L70 65" stroke="#4B3BC2" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                
+                <div class="feature-title">Definition</div>
+                <div class="feature-description">A fully simulated environment replacing reality</div>
+                
+                <div class="feature-title">Devices</div>
+                <div class="feature-description">Meta Quest, Valve Index, Oculus Rift</div>
+            </div>
+        </div>
+        
+        <div class="spectrum-container" id="spectrum-section">
+            <h2>The Extended Reality Continuum</h2>
+            <div class="reality-continuum">
+                <div class="reality-option">
+                    <div class="option-title">Real Environment</div>
+                    <div class="option-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="40" width="80" height="25" fill="#f5f5f5" stroke="#4B3BC2" stroke-width="1"/>
+                            <circle cx="50" cy="30" r="15" fill="#B5AEED"/>
+                            <path d="M40 65 L25 90 M60 65 L75 90" stroke="#4B3BC2" stroke-width="1"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="reality-option">
+                    <div class="option-title">Augmented Environment</div>
+                    <div class="option-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="40" width="80" height="25" fill="#f5f5f5" stroke="#4B3BC2" stroke-width="1" opacity="0.7"/>
+                            <circle cx="35" cy="30" r="10" fill="#B5AEED"/>
+                            <rect x="60" y="25" width="15" height="15" fill="#4B3BC2" opacity="0.7"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="reality-option">
+                    <div class="option-title">Mixed Environment</div>
+                    <div class="option-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="40" width="80" height="25" fill="#f5f5f5" stroke="#4B3BC2" stroke-width="1" opacity="0.5"/>
+                            <circle cx="35" cy="40" r="12" fill="#B5AEED" opacity="0.8"/>
+                            <rect x="55" y="35" width="20" height="20" fill="#4B3BC2" opacity="0.6"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="reality-option">
+                    <div class="option-title">Virtual Environment</div>
+                    <div class="option-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="30" width="80" height="40" rx="5" fill="#4B3BC2" opacity="0.8"/>
+                            <rect x="20" y="35" width="60" height="30" rx="3" fill="#B5AEED"/>
+                            <rect x="30" y="40" width="40" height="20" rx="2" fill="#FFFFFF"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="continuum-line"></div>
+                <div class="moving-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hasEnteredSlide = false;
+        let slideStep = 0;
+        const spectrumSection = document.getElementById('spectrum-section');
+        const techCards = document.getElementById('tech-cards');
+        function handleKeyEvent(event) {
+            if (event.key === 'ArrowRight') {
+                if (slideStep === 0) {
+                    spectrumSection.classList.add('visible');
+                    slideStep = 1;
+                    event.stopPropagation();
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage('stepHandled', '*');
+                    }
+                }
+                else if (slideStep === 1) {
+                    techCards.classList.add('visible');
+                    slideStep = 2;
+                    event.stopPropagation();
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage('stepHandled', '*');
+                    }
+                }
+            }
+            if (event.key === 'ArrowLeft') {
+                spectrumSection.classList.add('visible');
+                techCards.classList.add('visible');
+                slideStep = 2;
+            }
+        }
+        document.addEventListener('keydown', handleKeyEvent);
+        function markAsEntered() {
+            if (!hasEnteredSlide) {
+                hasEnteredSlide = true;
+                slideStep = 0;
+                spectrumSection.classList.remove('visible');
+                techCards.classList.remove('visible');
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({ 
+                        type: 'supportsSteps', 
+                        steps: 3
+                    }, '*');
+                }
+            }
+        }
+        window.addEventListener('message', function(event) {
+            const message = event.data;
+            
+            if (message === 'slideActive') {
+                markAsEntered();
+            }
+            
+            if (message === 'showAll') {
+                spectrumSection.classList.add('visible');
+                techCards.classList.add('visible');
+                slideStep = 2;
+            }
+            
+            if (message === 'next') {
+                handleKeyEvent({ 
+                    key: 'ArrowRight', 
+                    stopPropagation: function(){} 
+                });
+            }
+        });
+        window.onload = function() {
+            if (window === window.parent || document.visibilityState === 'visible') {
+                markAsEntered();
+            }
+        };
+    </script>
+</body>
+</html>

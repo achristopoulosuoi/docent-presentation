@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Technologies in Education: Implementation Challenges</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: white;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 10px;
+        }
+        h1 {
+            color: #4B3BC2;
+            font-size: 42px;
+            margin-top: 5px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        /* Challenges grid layout */
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin: 60px auto 0;
+            max-width: 1000px;
+        }
+        .challenge-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .challenge-icon {
+            width: 60px;
+            height: 60px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .challenge-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+        .challenge-title {
+            font-weight: bold;
+            color: #4B3BC2;
+            font-size: 24px;
+        }
+        .challenge-description ul {
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+        }
+        .challenge-description li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 19px;
+        }
+        
+        .challenge-description li::before {
+            content: "•";
+            color: #4B3BC2;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            width: 25px;
+            text-align: center;
+            font-size: 20px;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: #4B3BC2;
+        }
+        
+        /* Progressive reveal styling */
+        .reveal-element {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s;
+            pointer-events: none;
+        }
+        
+        .reveal-element.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Immersive Technologies in Education: Challenges</h1>
+        
+        <div class="challenges-grid">
+            <!-- Infrastructure Constraints -->
+            <div class="challenge-card reveal-element" id="infrastructure">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="35" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M35 35 L65 65 M65 35 L35 65" stroke="#4B3BC2" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="challenge-title">Infrastructure Constraints</div>
+                </div>
+                <div class="challenge-description">
+                    <ul>
+                        <li>High initial <span class="highlight">equipment investment</span></li>
+                        <li>Need for specialised <span class="highlight">technical support</span></li>
+                        <li>Physical <span class="highlight">space considerations</span></li>
+                        <li>Bandwidth and <span class="highlight">connectivity requirements</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="challenge-card reveal-element" id="user-experience">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 35 L70 35 L70 75 L30 75 Z" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="50" cy="55" r="10" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M50 25 L50 35" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="50" cy="25" r="5" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M45 55 L55 55" stroke="#4B3BC2" stroke-width="2" transform="rotate(45,50,55)"/>
+                            <path d="M45 55 L55 55" stroke="#4B3BC2" stroke-width="2" transform="rotate(-45,50,55)"/>
+                        </svg>
+                    </div>
+                    <div class="challenge-title">User Experience</div>
+                </div>
+                <div class="challenge-description">
+                    <ul>
+                        <li><span class="highlight">Simulator sickness</span> (session length/frequency)</li>
+                        <li><span class="highlight">Ergonomic concerns</span> (extended usage)</li>
+                        <li><span class="highlight">Cognitive overload</span> (complex simulations)</li>
+                        <li><span class="highlight">Accessibility</span> for users with <span class="highlight">impairments</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="challenge-card reveal-element" id="teacher">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 50 C 30 35, 70 35, 70 50" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="50" cy="30" r="10" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M50 40 L50 70" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M30 70 L70 70" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M45 50 L40 55 M55 50 L60 55" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M40 60 L60 60" stroke="#4B3BC2" stroke-width="2" stroke-dasharray="2,2"/>
+                        </svg>
+                    </div>
+                    <div class="challenge-title">Teacher Capacity</div>
+                </div>
+                <div class="challenge-description">
+                    <ul>
+                        <li>Need for specialised <span class="highlight">technological training</span></li>
+                        <li>Time demands for <span class="highlight">lesson preparation</span></li>
+                        <li>Resistance to <span class="highlight">pedagogical change</span></li>
+                        <li>Limited ongoing <span class="highlight">professional development</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="challenge-card reveal-element" id="evaluation">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="none" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="10" fill="rgba(75, 59, 194, 0.2)" stroke="#4B3BC2" stroke-width="2"/>
+                            <path d="M50 40 L50 45 M50 55 L50 60" stroke="#4B3BC2" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="2" fill="#4B3BC2"/>
+                            <path d="M20 30 L30 30 M70 30 L80 30" stroke="#4B3BC2" stroke-width="2" stroke-dasharray="2,2"/>
+                            <path d="M20 70 L30 70 M70 70 L80 70" stroke="#4B3BC2" stroke-width="2" stroke-dasharray="2,2"/>
+                        </svg>
+                    </div>
+                    <div class="challenge-title">Evaluation Frameworks</div>
+                </div>
+                <div class="challenge-description">
+                    <ul>
+                        <li>Lack of standardised <span class="highlight">assessment methods</span></li>
+                        <li>Lack of <span class="highlight">long-term impact </span>assessment</li>
+                        <li>Limited integration with <span class="highlight">existing systems</span></li>
+                        <li>Need for new <span class="highlight">Learning Analytics</span> approaches</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        let hasEnteredSlide = false;
+        const challenges = [
+            document.getElementById('infrastructure'),
+            document.getElementById('user-experience'),
+            document.getElementById('teacher'),
+            document.getElementById('evaluation')
+        ];
+        function handleKeyPress(event) {
+            if (event.key === 'ArrowRight') {
+                if (!hasEnteredSlide) return;
+                if (currentStep < challenges.length) {
+                    challenges[currentStep].classList.add('visible');
+                    currentStep++;
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage('stepHandled', '*');
+                    }
+                    
+                    event.stopPropagation();
+                    return;
+                }
+            }
+        }
+        function showAllContent() {
+            challenges.forEach(challenge => {
+                challenge.classList.add('visible');
+            });
+            currentStep = challenges.length;
+        }
+        function initializeSlide() {
+            if (!hasEnteredSlide) {
+                hasEnteredSlide = true;
+                currentStep = 0;
+                challenges.forEach(challenge => {
+                    challenge.classList.remove('visible');
+                });
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                        type: 'supportsSteps',
+                        steps: challenges.length + 1
+                    }, '*');
+                }
+                
+                console.log("Slide 6 initialized and ready for progressive reveal");
+            }
+        }
+        window.addEventListener('message', function(event) {
+            const message = event.data;
+            
+            if (message === 'slideActive') {
+                initializeSlide();
+            }
+            else if (message === 'showAll') {
+                showAllContent();
+            }
+            else if (message === 'next') {
+                handleKeyPress({ key: 'ArrowRight', stopPropagation: function(){} });
+            }
+        });
+        document.addEventListener('keydown', handleKeyPress);
+        window.onload = function() {
+            if (window === window.parent || document.visibilityState === 'visible') {
+                initializeSlide();
+            }
+        };
+    </script>
+</body>
+</html>

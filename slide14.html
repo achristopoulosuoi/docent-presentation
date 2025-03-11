@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future of Immersive Technologies in Education</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            min-height: 600px;
+            max-height: 100vh;
+        }
+        .right-panel {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2% 4%;
+            position: relative;
+            background-color: #f9f9f9;
+            overflow-y: auto;
+        }
+        .section-title {
+            font-size: 36px;
+            color: #4B3BC2;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(75, 59, 194, 0.2);
+            text-align: center;
+        }
+        
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+        
+        @media (max-width: 1024px) {
+            .future-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .future-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 18px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .future-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .corner-number {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(75, 59, 194, 0.1);
+            color: #4B3BC2;
+            font-weight: bold;
+            font-size: 16px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top-left-radius: 8px;
+            border-bottom-right-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .future-card:hover .corner-number {
+            background: rgba(75, 59, 194, 0.2);
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding-left: 35px;
+        }
+        
+        .card-icon {
+            width: 28px;
+            height: 28px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .bullet-list {
+            list-style-type: none;
+            padding-left: 5px;
+            margin-top: 12px;
+        }
+        
+        .bullet-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        
+        .bullet-list li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: rgba(75, 59, 194, 0.2);
+            border-radius: 50%;
+        }
+        
+        .bullet-list li::after {
+            content: "";
+            position: absolute;
+            left: 3px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: #4B3BC2;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .bullet-list li:nth-child(2)::after {
+            animation-delay: 0.3s;
+        }
+        
+        .bullet-list li:nth-child(3)::after {
+            animation-delay: 0.6s;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translateY(-50%) scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-50%) scale(1.3);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-50%) scale(1);
+                opacity: 1;
+            }
+        }
+        .timeline-container {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px 20px 40px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .timeline-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4B3BC2;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .timeline {
+            position: relative;
+            width: 95%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .timeline-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 130px;
+            position: relative;
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            font-size: 14px;
+            color: #4B3BC2;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .timeline-dot {
+            width: 14px;
+            height: 14px;
+            background-color: #4B3BC2;
+            border-radius: 50%;
+            margin: 8px 0;
+            position: relative;
+            z-index: 3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(75, 59, 194, 0.5);
+        }
+        
+        .timeline-tech {
+            font-size: 13px;
+            text-align: center;
+            width: 120px;
+            margin-top: 30px;
+            color: #333;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 85px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #4B3BC2, #8078D8, #B5AEED, rgba(181, 174, 237, 0.3));
+            z-index: 1;
+        }
+        .timeline-line::after {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: 0;
+            width: 18px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 4px;
+            filter: blur(3px);
+            animation: movingLight 7s infinite;
+            z-index: 2;
+        }
+        
+        @keyframes movingLight {
+            0% { left: 0%; opacity: 0.7; }
+            5% { opacity: 1; }
+            45% { opacity: 1; }
+            50% { left: 80%; opacity: 0; }
+            100% { left: 0%; opacity: 0; }
+        }
+        
+        .timeline-future {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .pulse-circle-container {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            height: 18px;
+            align-items: center;
+        }
+        
+        .pulse-circle {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #4B3BC2;
+            animation: pulse-grow 3s infinite;
+        }
+        
+        .delay-1 {
+            animation-delay: 1s;
+        }
+        
+        .delay-2 {
+            animation-delay: 2s;
+        }
+        
+        @keyframes pulse-grow {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+        
+        .future-text {
+            font-size: 13px;
+            font-weight: normal;
+            color: #333;
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="right-panel">
+            <div class="section-title fade-in">
+                Immersive Technologies in Education: The Future
+            </div>
+            
+            <div class="future-grid">
+                <div class="future-card fade-in delay-1">
+                    <div class="corner-number">1</div>
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        Educational Evolution
+                    </div>
+                    <ul class="bullet-list">
+                        <li>Hybrid learning spaces combining physical and virtual worlds</li>
+                        <li>Personalised learning pathways</li>
+                        <li>Global collaborative environments (Metaverse)</li>
+                    </ul>
+                </div>
+                
+                <div class="future-card fade-in delay-2">
+                    <div class="corner-number">3</div>
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 9V3H15" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3 15v6h6" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21 3l-7 7" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3 21l7-7" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        Technology Advancements
+                    </div>
+                    <ul class="bullet-list">
+                        <li>Lightweight wearable XR devices</li>
+                        <li>Intuitive interaction tools</li>
+                        <li>6G-powered networks</li>
+                    </ul>
+                </div>
+                
+                <div class="future-card fade-in delay-3">
+                    <div class="corner-number">2</div>
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 2v4" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8 2v4" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <rect x="2" y="6" width="20" height="16" rx="2" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6 12h12" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M6 16h6" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        Challenges to Address
+                    </div>
+                    <ul class="bullet-list">
+                        <li>Ensuring equal access across socioeconomic divides</li>
+                        <li>Developing reliable pedagogical frameworks</li>
+                        <li>Balancing screen time with physical world engagement</li>
+                    </ul>
+                </div>
+                
+                <div class="future-card fade-in delay-4">
+                    <div class="corner-number">4</div>
+                    <div class="card-title">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 8v4l3 3" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="12" r="10" fill="none" stroke="#4B3BC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        Emerging Applications (Beyond Education)
+                    </div>
+                    <ul class="bullet-list">
+                        <li>Digital twins</li>
+                        <li>Urban planning</li>
+                        <li>Virtual prototyping</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-container fade-in delay-5">
+                <div class="timeline-title">Important Milestones</div>
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1960s</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-tech">VR Pioneers Era</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">1990s</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-tech">VR/AR Early Explorations</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2010-2015</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-tech">VR Renaissance</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015-2020</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-tech">AR Mainstream Adoption</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-year">2020-Present</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-tech">XR Convergence</div>
+                    </div>
+                    
+                    <div class="timeline-future">
+                        <div class="timeline-year">Future</div>
+                        <div class="pulse-circle-container">
+                            <div class="pulse-circle"></div>
+                            <div class="pulse-circle delay-1"></div>
+                            <div class="pulse-circle delay-2"></div>
+                        </div>
+                        <div class="future-text">Next Frontier</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
